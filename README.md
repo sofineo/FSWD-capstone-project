@@ -9,8 +9,7 @@ Database: TBD - probably noSQL
 ## Features:
 
 ### User Authentication
-Register/login to save fitness data.\
-Optional guest mode for quick tracking.
+Register/login to save fitness data.
 
 ### Program Exercises to follow
 Suggested exercises to follow or to plan your own exercise and track repetition and weight lifting.
