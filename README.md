@@ -4,6 +4,8 @@ A web-based application that allows users to track their fitness activities, mon
 ## Technology stack:
 React, Typescript, NodeJS, HTML5, TAILWIND CSS, JWT
 
+Database: TBD - probably noSQL
+
 ## Features:
 
 ### User Authentication
