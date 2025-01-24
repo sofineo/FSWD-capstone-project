@@ -10,6 +10,9 @@ React, Typescript, NodeJS, HTML5, TAILWIND
 Register/login to save fitness data.\
 Optional guest mode for quick tracking.
 
+### Program Exercises to follow
+Suggested exercises to follow or to plan your own exercise and track repetition and weight lifting.
+
 ### Activity Logging
 Log workout activities (e.g., running, cycling, weightlifting) with duration, distance, calories burned.\
 Optional: Integrate with third-party APIs (e.g., Fitbit, Strava).
@@ -34,7 +37,7 @@ Log daily sleep hours and set sleep goal.\
 Set a Wind Down timer and sleep riminders.
 
 ### Water Intake Tracker
-Log daily water intake and set consumption goal.\
+Log daily water intake and set consumption goal.
 
 ### Dark Mode
 Switch between light and dark modes for accessibility.
@@ -43,4 +46,4 @@ Switch between light and dark modes for accessibility.
 Log Workout: User logs into their dashboard, clicks "Add Workout," selects the workout type, enters data (duration, distance), and clicks "Save."\
 Track Progress: On the dashboard, the user views their progress toward fitness goals through weekly summaries and graphs.\
 Set a Goal: User sets a goal to run 20 miles by the end of the month and tracks progress through visual indicators.\
-Add a recipe: User adds recipe with macros so it can be easily added on nutricion tracking.\
+Add a recipe: User adds recipe with macros so it can be easily added on nutricion tracking.
