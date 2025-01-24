@@ -2,7 +2,7 @@
 A web-based application that allows users to track their fitness activities, monitor progress, set fitness goals, track daily nutrition macros and sleep.
 
 ## Technology stack:
-React, Typescript, NodeJS, HTML5, TAILWIND
+React, Typescript, NodeJS, HTML5, TAILWIND CSS, JWT
 
 ## Features:
 
