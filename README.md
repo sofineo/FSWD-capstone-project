@@ -1,50 +1,44 @@
-# Fitness Tracker App - HealthSync
-A web-based application that allows users to track their fitness activities, monitor progress, set fitness goals, track daily nutrition macros and sleep.
+# HealthSync - Fitness Tracker App
 
-## Technology stack:
-React, Typescript, NodeJS, HTML5, TAILWIND CSS, JWT
+## Problem Statement
+In today's fast-paced world, many individuals struggle to maintain a balanced and healthy lifestyle due to a lack of time, motivation, and convenient tools. HealthSync aims to address this issue by providing a comprehensive fitness tracking application that helps users monitor their activities, set achievable fitness goals, and maintain a healthy routine. By integrating features like workout logging, nutrition tracking, and sleep monitoring, HealthSync empowers users to make data-driven decisions for their health and well-being.
 
-Database: TBD - probably noSQL
+## Overview of the Application’s Functionality
+HealthSync is a web-based fitness tracker designed to help users monitor and improve their overall health. Users can register or log in to save and access their fitness data securely. The application provides tools to log workout activities such as running, cycling, and weightlifting, while also tracking nutrition intake, sleep, and water consumption. Users can set fitness goals, monitor progress, and view summaries through an intuitive dashboard with graphs and charts. The app also features a recipe addition tool to streamline nutrition tracking and offers accessibility options like dark mode. HealthSync aims to be an all-in-one health companion that simplifies the process of achieving and maintaining a healthy lifestyle.
 
-## Features:
+## Technology Stack
 
-### User Authentication
-Register/login to save fitness data.
+- **Front-End:** React, TypeScript, HTML5, Tailwind CSS\
+- **Back-End:** Node.js, JWT for user authentication\
+- **Database:** To be determined (likely NoSQL)
 
-### Program Exercises to follow
-Suggested exercises to follow or to plan your own exercise and track repetition and weight lifting.
+## Features to be Implemented
 
-### Activity Logging
-Log workout activities (e.g., running, cycling, weightlifting) with duration, distance, calories burned.\
-Optional: Integrate with third-party APIs (e.g., Fitbit, Strava).
+### Core Features
 
-### Goal Setting
-Set fitness goals (e.g., run 100 miles in a month).\
-Track goal progress over time.
+- **User Authentication:** Secure registration and login.
+- **Activity Logging:** Log various workout activities, including duration, distance, and calories burned.
+- **Goal Setting:** Create fitness goals and track progress.
+- **Progress Dashboard:** View summaries and visual progress indicators (e.g., graphs, charts).
+- **Nutrition Tracking:** Log food intake, calories, and macros.
+- **Sleep Tracking:** Record sleep hours, set goals, and get reminders.
+- **Water Intake Tracker:* Log water consumption and set goals.
 
-### Progress Dashboard
-View workout history, weekly/monthly summaries.\
-Visual representation of goals vs. actual performance (graphs, charts).
+### Additional Features (Optional)
 
-### Nutrition Tracking
-Log daily food intake and calories consumed.\
-Track macros (protein, carbs, fats).
+- Integration with third-party APIs (e.g., Fitbit, Strava).
+- **Recipe Management:** Add personal recipes with macros for easy tracking.
+- **Dark Mode:** Accessibility feature to toggle between light and dark themes.
 
-### Recipe 
-Add your own recipe with macros to help with your nutricion tracking.
+### Features Under Analysis
 
-### Sleep Tracking Features
-Log daily sleep hours and set sleep goal.\
-Set a Wind Down timer and sleep riminders.
+- **Program Exercises to Follow:**\
+This feature would allow users to access suggested exercise programs, plan custom workouts, and track details such as repetitions and weightlifting progress. However, it requires careful consideration of the complexity involved, including exercise program templates, customization capabilities, and user data integration. The feasibility and implementation of this feature will be evaluated during the development process.
 
-### Water Intake Tracker
-Log daily water intake and set consumption goal.
+### User Stories
 
-### Dark Mode
-Switch between light and dark modes for accessibility.
-
-## User Journey:
-Log Workout: User logs into their dashboard, clicks "Add Workout," selects the workout type, enters data (duration, distance), and clicks "Save."\
-Track Progress: On the dashboard, the user views their progress toward fitness goals through weekly summaries and graphs.\
-Set a Goal: User sets a goal to run 20 miles by the end of the month and tracks progress through visual indicators.\
-Add a recipe: User adds recipe with macros so it can be easily added on nutricion tracking.
+1. As a user, I want to log my daily workouts so that I can track my fitness activities and monitor calories burned.
+2. As a user, I want to set fitness goals so that I can stay motivated and track my progress over time.
+3. As a user, I want to add and track my daily food intake so that I can monitor my calorie and macro consumption.
+4. As a user, I want to record my sleep hours and set reminders so that I can maintain healthy sleep habits.
+5. As a user, I want to view a progress dashboard with graphs and summaries so that I can see my performance and adjust my goals as needed.
