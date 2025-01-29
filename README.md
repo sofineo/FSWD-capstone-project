@@ -42,3 +42,7 @@ This feature would allow users to access suggested exercise programs, plan custo
 3. As a user, I want to add and track my daily food intake so that I can monitor my calorie and macro consumption.
 4. As a user, I want to record my sleep hours and set reminders so that I can maintain healthy sleep habits.
 5. As a user, I want to view a progress dashboard with graphs and summaries so that I can see my performance and adjust my goals as needed.
+
+## Entity-Relationship Diagram (ERD)
+
+🔗 [View the ER Diagram on Lucidchart]([https://lucid.app/lucidchart/your-diagram-link](https://lucid.app/lucidchart/5fb0775b-8876-48e9-9b47-4054f9f1ce62/edit?viewport_loc=-1080%2C-432%2C2085%2C1149%2C0_0&invitationId=inv_e7e51ade-e78c-4874-8caa-81b322eb0739))
