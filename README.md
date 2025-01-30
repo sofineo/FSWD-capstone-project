@@ -46,3 +46,11 @@ This feature would allow users to access suggested exercise programs, plan custo
 ## Entity-Relationship Diagram (ERD)
 
 🔗 [View the ER Diagram on Lucidchart](https://lucid.app/lucidchart/5fb0775b-8876-48e9-9b47-4054f9f1ce62/edit?viewport_loc=-1080%2C-432%2C2085%2C1149%2C0_0&invitationId=inv_e7e51ade-e78c-4874-8caa-81b322eb0739)
+
+## API Contract
+
+🔗 [View the API contract](https://guscanada-my.sharepoint.com/:w:/g/personal/sofia_de5850_mycanctb_ca/EWH0u9WEbapIu5bqm5X3iDQB3SaEoThc0NfWXBau6kqLeg?e=IJaxhA)
+
+
+
+
