@@ -51,6 +51,11 @@ This feature would allow users to access suggested exercise programs, plan custo
 
 🔗 [View the API contract](https://guscanada-my.sharepoint.com/:w:/g/personal/sofia_de5850_mycanctb_ca/EWH0u9WEbapIu5bqm5X3iDQB3SaEoThc0NfWXBau6kqLeg?e=IJaxhA)
 
+## High-level Architecture 
+Ideally use AWS services
+
+🔗 [View the High-level Architecture Diagram](https://lucid.app/lucidchart/e1195048-5845-464f-a663-a39e09e4434b/edit?viewport_loc=-457%2C-550%2C1583%2C873%2C0_0&invitationId=inv_029caeb6-f28c-422a-b167-601720b460d5)
+
 
 
 
