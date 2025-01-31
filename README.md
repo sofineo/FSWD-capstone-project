@@ -8,8 +8,8 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 
 ## Technology Stack
 
-- **Front-End:** React, TypeScript, HTML5, Tailwind CSS\
-- **Back-End:** Node.js, JWT for user authentication\
+- **Front-End:** React, TypeScript, HTML5, Tailwind CSS
+- **Back-End:** Node.js, JWT for user authentication
 - **Database:** To be determined (likely NoSQL)
 
 ## Features to be Implemented
