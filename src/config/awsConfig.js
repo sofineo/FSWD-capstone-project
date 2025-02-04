@@ -14,5 +14,8 @@ const client = new DynamoDBClient({
 // Create DocumentClient for simplified data operations
 const dynamoDB = DynamoDBDocumentClient.from(client);
 
+// ✅ Log message after initializing DynamoDB Client
+console.log("✅ AWS DynamoDB Client initialized in region:", env.AWS_REGION);
+
 // Export the initialized DynamoDB client
-module.exports = { dynamoDB };
+module.exports = { client, dynamoDB };

@@ -1,52 +1,57 @@
-const env = require("../config/env");
-const { PutCommand, GetCommand } = require("@aws-sdk/lib-dynamodb");
-const { dynamoDB } = require("../config/awsConfig");
+const userRepository = require("../repositories/userRepository");
 
-const TABLE_NAME = env.USERS_TABLE;
-
-// Create a new user
+// ✅ Create a new user
 exports.createUser = async (req, res) => {
-  const { user_id, name, email } = req.body;
-
-  if (!TABLE_NAME) {
-    return res.status(500).json({ error: "Table name is missing in .env" });
-  }
-
-  if (!user_id) {
-    return res
-      .status(400)
-      .json({ error: "user_id is required in request body" });
-  }
-
-  const params = {
-    TableName: TABLE_NAME,
-    Item: { user_id, name, email },
-  };
-
   try {
-    await dynamoDB.send(new PutCommand(params));
-    res.json({ message: "User added successfully", user: params.Item });
+    const { name, email } = req.body;
+
+    // Validate input
+    if (!name || !email) {
+      return res
+        .status(400)
+        .json({ error: "Missing required fields: name, email" });
+    }
+
+    const newUser = await userRepository.createUser({ name, email });
+    res.status(201).json({ message: "User added successfully", user: newUser });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Failed to create user" });
   }
 };
 
-// Get a user by ID
-exports.getUser = async (req, res) => {
-  const { user_id } = req.params;
-
-  const params = {
-    TableName: TABLE_NAME,
-    Key: { user_id },
-  };
-
+// ✅ Get a user by ID
+exports.getUserById = async (req, res) => {
   try {
-    const result = await dynamoDB.send(new GetCommand(params));
-    if (!result.Item) {
-      return res.status(404).json({ message: "User not found" });
+    const { id } = req.params;
+
+    // Validate input
+    if (!id) {
+      return res
+        .status(400)
+        .json({ error: "User ID is required in request params" });
     }
-    res.json(result.Item);
+
+    const user = await userRepository.getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json(user);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error retrieving user:", error);
+    res.status(500).json({ error: "Failed to retrieve user" });
+  }
+};
+
+// ✅ Get all users
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await userRepository.getAllUsers();
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error retrieving users:", error);
+    res.status(500).json({ error: "Failed to retrieve users" });
   }
 };

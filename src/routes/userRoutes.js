@@ -1,5 +1,5 @@
 const express = require("express");
-const { createUser, getUser } = require("../controllers/userController");
+const userController = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -22,7 +22,7 @@ const router = express.Router();
  *       201:
  *         description: User created successfully.
  */
-router.post("/users", createUser);
+router.post("/", userController.createUser);
 
 /**
  * @swagger
@@ -33,7 +33,7 @@ router.post("/users", createUser);
  *       200:
  *         description: A list of users.
  */
-router.get("/users", getUser);
+router.get("/", userController.getAllUsers);
 
 /**
  * @swagger
@@ -44,7 +44,7 @@ router.get("/users", getUser);
  *       200:
  *         description: Specific user by id.
  */
-router.get("/users/:id", getUser);
+router.get("/users/:id", userController.getUserById);
 
 
 /**
