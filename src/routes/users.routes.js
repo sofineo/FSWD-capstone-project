@@ -1,8 +1,9 @@
-const express = require("express");
-const userController = require("../controllers/userController");
+const { Router } = require("express");
+const userRouter = Router();
 
-const router = express.Router();
-
+// const userController = require("../controllers/UserController");
+const UserController = require("../controllers/UserController");
+const userController = new UserController();
 
 /**
  * @swagger
@@ -22,7 +23,7 @@ const router = express.Router();
  *       201:
  *         description: User created successfully.
  */
-router.post("/", userController.createUser);
+userRouter.post("/", userController.create);
 
 /**
  * @swagger
@@ -33,7 +34,7 @@ router.post("/", userController.createUser);
  *       200:
  *         description: A list of users.
  */
-router.get("/", userController.getAllUsers);
+userRouter.get("/", userController.index);
 
 /**
  * @swagger
@@ -44,8 +45,7 @@ router.get("/", userController.getAllUsers);
  *       200:
  *         description: Specific user by id.
  */
-router.get("/users/:id", userController.getUserById);
-
+userRouter.get("/:user_id", userController.show);
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ router.get("/users/:id", userController.getUserById);
  *       200:
  *         description: User updated successfully.
  */
-// router.put("/:id", updateUser);
+userRouter.put("/:user_id", userController.update);
 
 /**
  * @swagger
@@ -90,6 +90,6 @@ router.get("/users/:id", userController.getUserById);
  *       200:
  *         description: User deleted successfully.
  */
-// router.delete("/:id", deleteUser);
+userRouter.delete("/:user_id", userController.delete);
 
-module.exports = router;
+module.exports = userRouter;
