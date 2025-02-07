@@ -2,18 +2,18 @@ const request = require("supertest");
 const app = require("../app");
 
 describe("User API Tests", () => {
-  let user_id;
+  let userId;
 
   test("✅ Should create a new user", async () => {
     const res = await request(app).post("/api/users").send({
       name: "Test User",
-      email: "test@example.com",
+      email: "test123456@mail.com",
       password: "123456",
     });
 
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty("user");
-    user_id = res.body.user.user_id;
+    userId = res.body.user.user_id;
   });
 
   test("✅ Should retrieve all users", async () => {
@@ -23,27 +23,27 @@ describe("User API Tests", () => {
   });
 
   test("✅ Should retrieve a user by ID", async () => {
-    const res = await request(app).get(`/api/users/${user_id}`);
+    const res = await request(app).get(`/api/users/${userId}`);
     expect(res.status).toBe(200);
-    expect(res.body.user_id).toBe(user_id);
+    expect(res.body.user_id).toBe(userId);
   });
 
-  // test("✅ Should return 404 for non-existent user", async () => {
-  //   const res = await request(app).get("/api/users/non-existent-id");
-  //   expect(res.status).toBe(404);
-  // });
+  test("✅ Should return 404 for non-existent user", async () => {
+    const res = await request(app).get("/api/users/non-existent-id");
+    expect(res.status).toBe(404);
+  });
 
   test("✅ Should update a user", async () => {
     const res = await request(app)
-      .put(`/api/users/${user_id}`)
-      .send({ name: "Updated Name", email: "updated@example.com" });
+      .put(`/api/users/${userId}`)
+      .send({ name: "Updated Name", email: "updatedtest@example.com" });
 
     expect(res.status).toBe(200);
     expect(res.body.user.name).toBe("Updated Name");
   });
 
   test("✅ Should delete a user", async () => {
-    const res = await request(app).delete(`/api/users/${user_id}`);
+    const res = await request(app).delete(`/api/users/${userId}`);
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ message: "User deleted successfully" });
   });

@@ -6,24 +6,46 @@ const {
   ScanCommand,
   UpdateCommand,
   DeleteCommand,
+  QueryCommand,
 } = require("@aws-sdk/lib-dynamodb");
 const { USERS_TABLE } = require("../config/env");
 
-//TODO: ScanCommand is not suitable for large scale
-//TODO: Check if email already exists before creating new user
-//TODO: Check users exists before updating or deleting
-
 class UserRepository {
-  async findUserByEmail(email) {
-    //CREATE FUNCTION
+  async findByEmail(email) {
+    const params = new QueryCommand({
+      TableName: USERS_TABLE,
+      IndexName: "email-index",
+      KeyConditionExpression: "email = :email",
+      ExpressionAttributeValues: {
+        ":email": email.toLowerCase(),
+      },
+    });
+
+    const result = await dynamoDB.send(params);
+    return result.Items.length ? result.Items[0] : null;
+  }
+
+  async findById(userId) {
+    const params = new GetCommand({
+      TableName: USERS_TABLE,
+      Key: { user_id: userId },
+    });
+
+    const result = await dynamoDB.send(params);
+    console.log(result.Item);
+    return result.Item || null; // Return null if user doesn't exist
   }
 
   async create(userData) {
     const user = {
       user_id: uuidv4(),
-      name: userData.name,
       email: userData.email.toLowerCase(),
       password: userData.password,
+      name: userData.name,
+      age: userData.age || null,
+      gender: userData.gender || null,
+      height: userData.height || null,
+      weight: userData.weight || null,
       createdAt: new Date().toISOString(),
     };
 
@@ -36,26 +58,28 @@ class UserRepository {
     return user;
   }
 
-  async index() {
-    const params = new ScanCommand({ TableName: USERS_TABLE });
-    const result = await dynamoDB.send(params);
-    return result.Items || [];
-  }
-
-  async show(user_id) {
-    const params = new GetCommand({
+  //To avoid reading all the table -> pagination
+  async findAll(limit = 10, lastKey = null) {
+    const params = {
       TableName: USERS_TABLE,
-      Key: { user_id },
-    });
+      Limit: limit,
+    };
 
-    const result = await dynamoDB.send(params);
-    return result.Item || null; // Return null if user doesn't exist
+    if (lastKey) {
+      params.ExclusiveStartKey = lastKey;
+    }
+
+    const result = await dynamoDB.send(new ScanCommand(params));
+    return {
+      items: result.Items || [],
+      lastKey: result.LastEvaluatedKey || null,
+    };
   }
 
-  async update(user_id, updates) {
+  async update(userId, updates) {
     // Build the update expression dynamically.
     let updateExpression = "set";
-    const expressionAttributeNames = {};
+    const expressionAttributeNames = {}; //Maps att. name to avoid reserved keyword conflicts in DynamoDB
     const expressionAttributeValues = {};
 
     // Iterate over each field in req.body
@@ -65,12 +89,12 @@ class UserRepository {
       expressionAttributeValues[`:${field}`] = updates[field];
     });
 
-    // Remove the trailing comma
+    // Remove the trailing comma since updateExpression as the , in the end
     updateExpression = updateExpression.slice(0, -1);
 
     const params = new UpdateCommand({
       TableName: USERS_TABLE,
-      Key: { user_id },
+      Key: { user_id: userId },
       UpdateExpression: updateExpression,
       ExpressionAttributeNames: expressionAttributeNames,
       ExpressionAttributeValues: expressionAttributeValues,
@@ -81,11 +105,11 @@ class UserRepository {
     return result.Attributes;
   }
 
-  async delete(user_id) {
+  async delete(userId) {
     await dynamoDB.send(
       new DeleteCommand({
         TableName: USERS_TABLE,
-        Key: { user_id },
+        Key: { user_id: userId },
       })
     );
   }

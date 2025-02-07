@@ -23,7 +23,7 @@ const userController = new UserController();
  *       201:
  *         description: User created successfully.
  */
-userRouter.post("/", userController.create);
+userRouter.post("/", userController.create.bind(userController));
 
 /**
  * @swagger
@@ -34,7 +34,7 @@ userRouter.post("/", userController.create);
  *       200:
  *         description: A list of users.
  */
-userRouter.get("/", userController.index);
+userRouter.get("/", userController.getUsers.bind(userController));
 
 /**
  * @swagger
@@ -45,7 +45,7 @@ userRouter.get("/", userController.index);
  *       200:
  *         description: Specific user by id.
  */
-userRouter.get("/:user_id", userController.show);
+userRouter.get("/:userId", userController.getUser.bind(userController));
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ userRouter.get("/:user_id", userController.show);
  *       200:
  *         description: User updated successfully.
  */
-userRouter.put("/:user_id", userController.update);
+userRouter.put("/:userId", userController.update.bind(userController));
 
 /**
  * @swagger
@@ -90,6 +90,6 @@ userRouter.put("/:user_id", userController.update);
  *       200:
  *         description: User deleted successfully.
  */
-userRouter.delete("/:user_id", userController.delete);
+userRouter.delete("/:userId", userController.delete.bind(userController));
 
 module.exports = userRouter;
