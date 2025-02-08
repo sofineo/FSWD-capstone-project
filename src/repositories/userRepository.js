@@ -8,7 +8,7 @@ const {
   DeleteCommand,
   QueryCommand,
 } = require("@aws-sdk/lib-dynamodb");
-const { USERS_TABLE } = require("../config/env");
+const { USERS_TABLE } = require("../config/envConfig");
 
 class UserRepository {
   async findByEmail(email) {
@@ -32,7 +32,6 @@ class UserRepository {
     });
 
     const result = await dynamoDB.send(params);
-    console.log(result.Item);
     return result.Item || null; // Return null if user doesn't exist
   }
 

@@ -4,9 +4,9 @@ class GetUsersService {
   }
 
   async execute(limit, lastKey) {
-    const users = await this.userRepository.findAll(limit, lastKey);
+    const result = await this.userRepository.findAll(limit, lastKey);
 
-    return users;
+    return result;
   }
 }
 

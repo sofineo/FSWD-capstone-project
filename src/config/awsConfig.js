@@ -1,4 +1,4 @@
-const env = require("../config/env");
+const env = require("../config/envConfig");
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
 const { DynamoDBDocumentClient } = require("@aws-sdk/lib-dynamodb");
 

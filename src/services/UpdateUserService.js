@@ -6,18 +6,20 @@ class UpdateUserService {
   }
 
   async execute(userId, updates) {
-    const user = await this.userRepository.findById(userId);
+    const existingUser = await this.userRepository.findById(userId);
 
-    if (!user) {
-      throw new AppError("User not found");
+    if (!existingUser) {
+      throw new AppError("User not found", 404);
     }
 
-    const checkIfEmailIsInUse = await this.userRepository.findByEmail(
-      updates.email
-    );
+    if (updates.email && updates.email !== existingUser.email) {
+      const existingUserWithEmail = await this.userRepository.findByEmail(
+        updates.email
+      );
 
-    if (checkIfEmailIsInUse) {
-      throw new AppError("Email already in use");
+      if (existingUserWithEmail) {
+        throw new AppError("Email already in use", 409);
+      }
     }
 
     const updatedUser = await this.userRepository.update(userId, updates);

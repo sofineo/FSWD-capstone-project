@@ -5,7 +5,8 @@ const requiredEnv = [
   "AWS_REGION",
   "AWS_ACCESS_KEY_ID",
   "AWS_SECRET_ACCESS_KEY",
-  "USERS_TABLE"
+  "USERS_TABLE",
+  "WORKOUTS_TABLE",
 ];
 
 // Check if all required environment variables are set
@@ -23,5 +24,6 @@ module.exports = {
   AWS_REGION: process.env.AWS_REGION,
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-  USERS_TABLE: process.env.USERS_TABLE
+  USERS_TABLE: process.env.USERS_TABLE,
+  WORKOUTS_TABLE: process.env.WORKOUTS_TABLE,
 };
