@@ -3,7 +3,11 @@ class CreateWorkoutService {
     this.workoutRepository = workoutRepository;
   }
 
-  async execute() {}
+  async execute(userId, workoutData) {
+    const newWorkout = await this.workoutRepository.create(userId, workoutData);
+
+    return newWorkout;
+  }
 }
 
 module.exports = CreateWorkoutService;

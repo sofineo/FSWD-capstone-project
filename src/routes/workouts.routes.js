@@ -14,7 +14,7 @@ router.get("/:workoutId", workoutController.getWorkout.bind(workoutController));
 router.put("/:workoutId", workoutController.getWorkout.bind(workoutController));
 router.delete(
   "/:workoutId",
-  workoutController.getWorkout.bind(workoutController)
+  workoutController.delete.bind(workoutController)
 );
 
 module.exports = router;

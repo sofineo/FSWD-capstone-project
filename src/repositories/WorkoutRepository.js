@@ -11,17 +11,57 @@ const {
 const { WORKOUTS_TABLE } = require("../config/envConfig");
 
 class WorkoutRepository {
-  async findById() {}
+  async filterByType() {
+    //TODO
+  }
 
-  async findByType() {}
+  async create(userId, workoutData) {
+    const workout = {
+      workout_id: uuidv4(),
+      user_id: userId,
+      workout_type: workoutData.workout_type,
+      duration: workoutData.duration,
+      distance: workoutData.distance || null,
+      calories_burned: workoutData.calories_burned || null,
+      date: workoutData.date || new Date().toISOString(),
+    };
 
-  async create() {}
+    const params = new PutCommand({
+      TableName: WORKOUTS_TABLE,
+      Item: workout,
+    });
 
-  async getAll() {}
+    await dynamoDB.send(params);
+    return workout;
+  }
 
-  async update() {}
+  async getAll() {
+    //TODO
+  }
 
-  async delete() {}
+  async getById(workoutId) {
+    const params = new GetCommand({
+      TableName: WORKOUTS_TABLE,
+      Key: { workout_id: workoutId },
+    });
+
+    const result = await dynamoDB.send(params);
+
+    return result.Item || null;
+  }
+
+  async update() {
+    //TODO
+  }
+
+  async delete(workoutId) {
+    await dynamoDB.send(
+      new DeleteCommand({
+        TableName: WORKOUTS_TABLE,
+        Key: { workout_id: workoutId },
+      })
+    );
+  }
 }
 
 module.exports = WorkoutRepository;
