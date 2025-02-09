@@ -17,16 +17,24 @@ class WorkoutController {
   }
 
   async create(req, res) {
-    return "Hi there";
+    return res.json({ message: "Access granted", user: req.user });
   }
 
-  async getWorkouts(req, res) {}
+  async getWorkouts(req, res) {
+    return res.json({ message: "Access granted", user: req.user });
+  }
 
-  async getWorkout(req, res) {}
+  async getWorkout(req, res) {
+    return res.json({ message: "Access granted", user: req.user });
+  }
 
-  async update(req, res) {}
+  async update(req, res) {
+    return res.json({ message: "Access granted", user: req.user });
+  }
 
-  async delete(req, res) {}
+  async delete(req, res) {
+    return res.json({ message: "Access granted", user: req.user });
+  }
 }
 
 module.exports = WorkoutController;

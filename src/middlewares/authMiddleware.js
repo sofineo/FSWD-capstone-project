@@ -17,7 +17,7 @@ function verifyToken(req, res, next) {
     req.user = { userId: user_id };
 
     return next();
-  } catch (error) {
+  } catch {
     throw new AppError("Invalid or expired token.", 401);
   }
 }

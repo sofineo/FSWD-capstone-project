@@ -16,13 +16,13 @@ describe("Session API Tests", () => {
   });
 
   test("✅ Should authenticate a user and return a token", async () => {
-    const response = await request(app).post("/api/users").send({
+    const newUserResponse = await request(app).post("/api/users").send({
       name: "Test User",
       email: "test@mail.com",
       password: "123456",
     });
 
-    userId = response.body.user.user_id;
+    userId = newUserResponse.body.user.user_id;
 
     const res = await request(app).post("/api/session").send({
       email: "test@mail.com",
@@ -44,21 +44,21 @@ describe("Session API Tests", () => {
     await request(app).delete(`/api/users/${userId}`);
   });
 
-  // test("✅ Should return 401 for accessing protected route without a token", async () => {
-  //   const res = await request(app).get("/api/protected");
-  //   expect(res.status).toBe(401);
-  //   expect(res.body).toHaveProperty(
-  //     "error",
-  //     "Access denied. No token provided."
-  //   );
-  // });
+  test("✅ Should return 401 for accessing protected route without a token", async () => {
+    const res = await request(app).get("/api/workouts");
+    expect(res.status).toBe(401);
+    expect(res.body).toHaveProperty(
+      "message",
+      "Access denied. No token provided."
+    );
+  });
 
-  // test("✅ Should return 401 for invalid token", async () => {
-  //   const res = await request(app)
-  //     .get("/api/protected")
-  //     .set("Authorization", "Bearer invalid-token");
+  test("✅ Should return 401 for invalid token", async () => {
+    const res = await request(app)
+      .get("/api/workouts")
+      .set("Authorization", "Bearer invalid-token");
 
-  //   expect(res.status).toBe(401);
-  //   expect(res.body).toHaveProperty("error", "Invalid or expired token.");
-  // });
+    expect(res.status).toBe(401);
+    expect(res.body).toHaveProperty("message", "Invalid or expired token.");
+  });
 });
