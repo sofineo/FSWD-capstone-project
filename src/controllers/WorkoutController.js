@@ -4,6 +4,7 @@ const DeleteWorkoutService = require("../services/DeleteWorkoutService");
 const GetWorkoutService = require("../services/GetWorkoutService");
 const GetWorkoutsService = require("../services/GetWorkoutsService");
 const UpdateWorkoutService = require("../services/UpdateWorkoutsService");
+const IndexWorkoutService = require("../services/WorkoutIndexService");
 
 class WorkoutController {
   constructor() {
@@ -20,15 +21,16 @@ class WorkoutController {
     this.updateWorkoutService = new UpdateWorkoutService(
       this.workoutRepository
     );
+    this.indexWorkoutService = new IndexWorkoutService(this.workoutRepository);
   }
 
   async create(req, res) {
-    const { workoutType, duration, distance, caloriesBurned, date } = req.body;
+    const { workout_type, duration, distance, caloriesBurned, date } = req.body;
 
     const userId = req.user.userId;
 
     const workoutData = {
-      workout_type: workoutType,
+      workoutType: workout_type,
       duration: duration,
       distance: distance,
       calories_burned: caloriesBurned,
@@ -46,8 +48,13 @@ class WorkoutController {
   }
 
   async getWorkouts(req, res) {
-    //TODO
-    return res.json({ message: "Access granted", user: req.user });
+    const userId = req.user.userId;
+
+    const result = await this.getWorkoutsService.execute(userId);
+
+    return res.status(200).json({
+      result,
+    });
   }
 
   async getWorkout(req, res) {
@@ -55,12 +62,22 @@ class WorkoutController {
 
     const workout = await this.getWorkoutService.execute(workoutId);
 
-    return res.status(200).json(workout);
+    res.status(200).json(workout);
   }
 
   async update(req, res) {
-    //TODO
-    return res.json({ message: "Access granted", user: req.user });
+    const updates = req.body;
+
+    const { workoutId } = req.params;
+
+    const updatedWorkout = await this.updateWorkoutService.execute(
+      workoutId,
+      updates
+    );
+
+    return res
+      .status(200)
+      .json({ message: "Workout updated successfully", updatedWorkout });
   }
 
   async delete(req, res) {
@@ -69,6 +86,28 @@ class WorkoutController {
     const result = await this.deleteWorkoutService.execute(workoutId);
 
     return res.status(200).json(result);
+  }
+
+  async index(req, res) {
+    const userId = req.user.userId;
+    const workoutType = req.query.type || null;
+    const date = req.query.date || null;
+    const limit = parseInt(req.query.limit) || 10;
+    const lastKey = req.query.lastKey
+      ? JSON.parse(decodeURIComponent(req.query.lastKey))
+      : null;
+
+    const result = await this.indexWorkoutService.execute(
+      userId,
+      workoutType,
+      date,
+      limit,
+      lastKey
+    );
+
+    return res.status(200).json({
+      result,
+    });
   }
 }
 

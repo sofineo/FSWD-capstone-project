@@ -3,7 +3,11 @@ class GetWorkoutsService {
     this.workoutRepository = workoutRepository;
   }
 
-  async execute() {}
+  async execute(userId) {
+    const result = await this.workoutRepository.getAll(userId);
+
+    return result;
+  }
 }
 
 module.exports = GetWorkoutsService;

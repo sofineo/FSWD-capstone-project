@@ -46,7 +46,7 @@ class UserController {
 
     const result = await this.getUsersService.execute(limit, lastKey);
 
-    res.status(200).json({
+    return res.status(200).json({
       users: result.items,
       nextPageKey: result.lastKey ? JSON.stringify(result.lastKey) : null,
     });
@@ -57,7 +57,7 @@ class UserController {
 
     const user = await this.getUserService.execute(userId);
 
-    res.status(200).json(user);
+    return res.status(200).json(user);
   }
 
   async update(req, res) {
@@ -65,7 +65,7 @@ class UserController {
     const updates = req.body;
 
     const updatedUser = await this.updateUserService.execute(userId, updates);
-    res
+    return res
       .status(200)
       .json({ message: "User updated successfully", user: updatedUser });
   }
@@ -75,7 +75,7 @@ class UserController {
 
     const result = await this.deleteUserService.execute(userId);
 
-    res.status(200).json(result);
+    return res.status(200).json(result);
   }
 }
 
