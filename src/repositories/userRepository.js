@@ -45,7 +45,7 @@ class UserRepository {
       gender: userData.gender || null,
       height: userData.height || null,
       weight: userData.weight || null,
-      createdAt: new Date().toISOString(),
+      create_at: new Date().toISOString(),
     };
 
     const params = new PutCommand({

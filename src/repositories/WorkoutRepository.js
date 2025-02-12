@@ -69,6 +69,7 @@ class WorkoutRepository {
       distance: workoutData.distance || null,
       calories_burned: workoutData.calories_burned || null,
       date: workoutData.date || new Date().toISOString().split("T")[0],
+      created_at: new Date().toISOString(),
     };
 
     const params = new PutCommand({

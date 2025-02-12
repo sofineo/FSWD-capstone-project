@@ -64,6 +64,8 @@ class UserController {
     const { userId } = req.params;
     const updates = req.body;
 
+    updates.updated_at = new Date().toISOString();
+
     const updatedUser = await this.updateUserService.execute(userId, updates);
     return res
       .status(200)

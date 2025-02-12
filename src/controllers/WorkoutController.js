@@ -3,8 +3,8 @@ const CreateWorkoutService = require("../services/CreateWorkoutService");
 const DeleteWorkoutService = require("../services/DeleteWorkoutService");
 const GetWorkoutService = require("../services/GetWorkoutService");
 const GetWorkoutsService = require("../services/GetWorkoutsService");
-const UpdateWorkoutService = require("../services/UpdateWorkoutsService");
-const IndexWorkoutService = require("../services/WorkoutIndexService");
+const UpdateWorkoutService = require("../services/UpdateWorkoutService");
+const IndexWorkoutService = require("../services/IndexWorkoutService");
 
 class WorkoutController {
   constructor() {
@@ -69,6 +69,8 @@ class WorkoutController {
     const updates = req.body;
 
     const { workoutId } = req.params;
+
+    updates.updated_at = new Date().toISOString();
 
     const updatedWorkout = await this.updateWorkoutService.execute(
       workoutId,
