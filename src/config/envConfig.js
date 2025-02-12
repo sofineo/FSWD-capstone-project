@@ -7,6 +7,7 @@ const requiredEnv = [
   "AWS_SECRET_ACCESS_KEY",
   "USERS_TABLE",
   "WORKOUTS_TABLE",
+  "WATER_INTAKE_TABLE",
 ];
 
 // Check if all required environment variables are set
@@ -26,4 +27,5 @@ module.exports = {
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   USERS_TABLE: process.env.USERS_TABLE,
   WORKOUTS_TABLE: process.env.WORKOUTS_TABLE,
+  WATER_INTAKE_TABLE: process.env.WATER_INTAKE_TABLE,
 };

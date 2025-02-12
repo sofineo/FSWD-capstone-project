@@ -1,3 +1,5 @@
+const AppError = require("../utils/AppError");
+
 class UpdateWorkoutService {
   constructor(workoutRepository) {
     this.workoutRepository = workoutRepository;
