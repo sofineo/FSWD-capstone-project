@@ -40,7 +40,8 @@ describe("Session API Tests", () => {
       .set("Authorization", `Bearer ${token}`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty("message", "Access granted");
+    expect(res.body).toHaveProperty("result");
+    expect(res.body.result).toHaveProperty("items"); 
     await request(app).delete(`/api/users/${userId}`);
   });
 
