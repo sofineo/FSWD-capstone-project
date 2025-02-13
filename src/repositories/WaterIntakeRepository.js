@@ -4,16 +4,37 @@ const {
   PutCommand,
   DeleteCommand,
   GetCommand,
+  QueryCommand,
 } = require("@aws-sdk/lib-dynamodb");
 const { WATER_INTAKE_TABLE } = require("../config/envConfig");
+const { ScanCommand } = require("@aws-sdk/client-dynamodb");
 
 class WaterIntakeRepository {
+  async filterByDate(date, userId) {
+    const params = new QueryCommand({
+      TableName: WATER_INTAKE_TABLE,
+      IndexName: "date-user_id-index",
+      KeyConditionExpression: "#date = :date AND user_id = :user_id",
+      ExpressionAttributeNames: {
+        "#date": "date",
+      },
+      ExpressionAttributeValues: {
+        ":date": date,
+        ":user_id": userId,
+      },
+    });
+
+    const result = await dynamoDB.send(params);
+    return result.Items.length ? result.Items : null;
+  }
+
   async create(userId, waterIntakeData) {
     const waterIntake = {
       water_intake_id: uuidv4(),
       user_id: userId,
       water_consumed_ml: waterIntakeData.waterConsumedMl,
       water_goal_ml: waterIntakeData.waterGoalMl,
+      date: waterIntakeData.date || new Date().toISOString().split("T")[0],
       created_at: new Date().toISOString(),
     };
 
@@ -36,9 +57,23 @@ class WaterIntakeRepository {
     return result.Item || null;
   }
 
-  async getByDate() {}
+  async getAll(userId) {
+    const params = new QueryCommand({
+      TableName: WATER_INTAKE_TABLE,
+      IndexName: "user_id-created_at-index",
+      KeyConditionExpression: "user_id = :user_id",
+      ExpressionAttributeValues: {
+        ":user_id": userId,
+      },
+      ScanIndexForward: false, // Fetch newest workouts first
+    });
 
-  async getAll() {}
+    const result = await dynamoDB.send(params);
+    return {
+      items: result.Items || [],
+      count: result.Count || null,
+    };
+  }
 
   async update() {}
 

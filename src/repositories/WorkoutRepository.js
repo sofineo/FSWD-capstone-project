@@ -68,7 +68,7 @@ class WorkoutRepository {
       duration: workoutData.duration,
       distance: workoutData.distance || null,
       calories_burned: workoutData.calories_burned || null,
-      date: workoutData.date || new Date().toISOString().split("T")[0],
+      date: workoutData.date,
       created_at: new Date().toISOString(),
     };
 
@@ -111,6 +111,7 @@ class WorkoutRepository {
   }
 
   async update(workoutId, updates) {
+    //REFERENCE -> https://stackoverflow.com/questions/55825544/how-to-dynamically-update-an-attribute-in-a-dynamodb-item
     // Build the update expression dynamically.
     let updateExpression = "set";
     const expressionAttributeNames = {}; //Maps att. name to avoid reserved keyword conflicts in DynamoDB

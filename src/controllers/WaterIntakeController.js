@@ -26,13 +26,14 @@ class WaterIntakeController {
     );
   }
   async create(req, res) {
-    const { water_consumed_ml, water_goal_ml } = req.body;
+    const { water_consumed_ml, water_goal_ml, date } = req.body;
 
     const userId = req.user.userId;
 
     const waterIntakeData = {
       waterConsumedMl: water_consumed_ml,
       waterGoalMl: water_goal_ml,
+      date: date || new Date().toISOString().split("T")[0],
     };
 
     const newWaterIntake = await this.createWaterIntakeService.execute(
@@ -46,7 +47,16 @@ class WaterIntakeController {
     });
   }
 
-  async getWaterIntakes(req, res) {}
+  async getWaterIntakes(req, res) {
+    const userId = req.user.userId;
+    const date = req.query.date || null;
+
+    const result = await this.getWaterIntakesService.execute(userId, date);
+
+    return res.status(200).json({
+      result,
+    });
+  }
 
   async getWaterIntake(req, res) {
     const { waterIntakeId } = req.params;
