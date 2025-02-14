@@ -66,7 +66,23 @@ class WaterIntakeController {
     res.status(200).json(waterIntake);
   }
 
-  async update(req, res) {}
+  async update(req, res) {
+    const updates = req.body;
+
+    const { waterIntakeId } = req.params;
+
+    updates.updated_at = new Date().toISOString();
+
+    const updatedWaterIntake = await this.updateWaterIntakeService.execute(
+      waterIntakeId,
+      updates
+    );
+
+    return res.status(200).json({
+      message: "Water Intake updated successfully",
+      updatedWaterIntake,
+    });
+  }
 
   async delete(req, res) {
     const { waterIntakeId } = req.params;
