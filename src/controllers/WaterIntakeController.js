@@ -43,7 +43,7 @@ class WaterIntakeController {
 
     return res.status(201).json({
       message: "Water Intake added successfully",
-      workout: newWaterIntake,
+      waterIntake: newWaterIntake,
     });
   }
 

@@ -9,7 +9,7 @@ class GetWaterIntakeService {
     const waterIntake = await this.waterIntakeRepository.getById(waterIntakeId);
 
     if (!waterIntake) {
-      throw new AppError("Water Intake not found", 404);
+      throw new AppError("Water Intake record not found", 404);
     }
 
     return waterIntake;
