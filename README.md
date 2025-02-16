@@ -1,9 +1,11 @@
 # HealthSync - Fitness Tracker App
 
 ## Problem Statement
+
 In today's fast-paced world, many individuals struggle to maintain a balanced and healthy lifestyle due to a lack of time, motivation, and convenient tools. HealthSync aims to address this issue by providing a comprehensive fitness tracking application that helps users monitor their activities, set achievable fitness goals, and maintain a healthy routine. By integrating features like workout logging, nutrition tracking, and sleep monitoring, HealthSync empowers users to make data-driven decisions for their health and well-being.
 
 ## Overview of the Application’s Functionality
+
 HealthSync is a web-based fitness tracker designed to help users monitor and improve their overall health. Users can register or log in to save and access their fitness data securely. The application provides tools to log workout activities such as running, cycling, and weightlifting, while also tracking nutrition intake, sleep, and water consumption. Users can set fitness goals, monitor progress, and view summaries through an intuitive dashboard with graphs and charts. The app also features a recipe addition tool to streamline nutrition tracking and offers accessibility options like dark mode. HealthSync aims to be an all-in-one health companion that simplifies the process of achieving and maintaining a healthy lifestyle.
 
 ## Technology Stack
@@ -22,7 +24,7 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 - **Progress Dashboard:** View summaries and visual progress indicators (e.g., graphs, charts).
 - **Nutrition Tracking:** Log food intake, calories, and macros.
 - **Sleep Tracking:** Record sleep hours, set goals, and get reminders.
-- **Water Intake Tracker:* Log water consumption and set goals.
+- \*_Water Intake Tracker:_ Log water consumption and set goals.
 
 ### Additional Features (Optional)
 
@@ -33,7 +35,7 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 ### Features Under Analysis
 
 - **Program Exercises to Follow:**\
-This feature would allow users to access suggested exercise programs, plan custom workouts, and track details such as repetitions and weightlifting progress. However, it requires careful consideration of the complexity involved, including exercise program templates, customization capabilities, and user data integration. The feasibility and implementation of this feature will be evaluated during the development process.
+  This feature would allow users to access suggested exercise programs, plan custom workouts, and track details such as repetitions and weightlifting progress. However, it requires careful consideration of the complexity involved, including exercise program templates, customization capabilities, and user data integration. The feasibility and implementation of this feature will be evaluated during the development process.
 
 ### User Stories
 
@@ -51,11 +53,13 @@ This feature would allow users to access suggested exercise programs, plan custo
 
 🔗 [View the API contract](https://guscanada-my.sharepoint.com/:w:/g/personal/sofia_de5850_mycanctb_ca/EWH0u9WEbapIu5bqm5X3iDQB3SaEoThc0NfWXBau6kqLeg?e=IJaxhA)
 
-## High-level Architecture 
+## High-level Architecture
+
 Ideally use AWS services
 
 🔗 [View the High-level Architecture Diagram](https://lucid.app/lucidchart/e1195048-5845-464f-a663-a39e09e4434b/edit?viewport_loc=-457%2C-550%2C1583%2C873%2C0_0&invitationId=inv_029caeb6-f28c-422a-b167-601720b460d5)
 
+## References
 
-
-
+I've based my structure on my previous project
+https://github.com/sofineo/Food-Explorer-back-end-.git

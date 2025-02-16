@@ -8,6 +8,7 @@ const requiredEnv = [
   "USERS_TABLE",
   "WORKOUTS_TABLE",
   "WATER_INTAKE_TABLE",
+  "SLEEP_TABLE",
 ];
 
 // Check if all required environment variables are set
@@ -28,4 +29,5 @@ module.exports = {
   USERS_TABLE: process.env.USERS_TABLE,
   WORKOUTS_TABLE: process.env.WORKOUTS_TABLE,
   WATER_INTAKE_TABLE: process.env.WATER_INTAKE_TABLE,
+  SLEEP_TABLE: process.env.SLEEP_TABLE,
 };
