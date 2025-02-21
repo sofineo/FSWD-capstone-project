@@ -1,14 +1,12 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Counter } from "@/pages/Counter";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./app.routes";
+import AuthRoutes from "./auth.routes";
 
-const AppRoutes = () => {
+const Routes = () => {
+  const token = false;
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Counter />} />
-      </Routes>
-    </Router>
+    <BrowserRouter>{token ? <AppRoutes /> : <AuthRoutes />}</BrowserRouter>
   );
 };
 
-export default AppRoutes;
+export default Routes;
