@@ -1,5 +1,5 @@
 import { ModeToggle } from "@/components/mode-toggle";
-import { useAppStore } from "@/store/UseAppSore";
+import { useAppStore } from "@/store/useAppSore";
 
 export const Counter = () => {
   const { count, increase, decrease } = useAppStore();

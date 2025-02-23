@@ -1,4 +1,3 @@
-//https://ui.shadcn.com/docs/dark-mode/vite
 import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
