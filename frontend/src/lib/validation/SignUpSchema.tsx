@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const formSchema = z.object({
+export const SignUpSchema = z.object({
   email: z.string().email().toLowerCase(),
   password: z
     .object({
@@ -23,9 +23,9 @@ export const formSchema = z.object({
       path: ["confirmPassword"], // Attach error to confirmPassword field
     }),
   name: z.string(),
-  age: z.number().int().min(0).max(150),
-  gender: z.enum(
-    [
+  age: z.number().int().min(0).max(150).nullable().optional(),
+  gender: z
+    .enum([
       "male",
       "female",
       "non-binary",
@@ -33,12 +33,11 @@ export const formSchema = z.object({
       "gender-fluid",
       "prefer-not-to-say",
       "other",
-    ],
-    { required_error: "Please select an email to display." }
-  ),
-  heightCm: z.number().min(50).max(300),
-  heightFeet: z.number().min(1).max(8),
-  heightInches: z.number().min(0).max(11),
-  weightKg: z.number().min(10).max(500),
-  weightLbs: z.number().min(22).max(1100),
+    ])
+    .optional(),
+  heightCm: z.number().min(50).max(300).nullable().optional(),
+  heightFeet: z.number().min(1).max(8).nullable().optional(),
+  heightInches: z.number().min(0).max(11).nullable().optional(),
+  weightKg: z.number().min(10).max(500).nullable().optional(),
+  weightLbs: z.number().min(22).max(1100).nullable().optional(),
 });

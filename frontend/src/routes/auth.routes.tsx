@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { SignUp } from "@/pages/SignUp";
 import { SignIn } from "@/pages/SignIn";
 
-const AppRoutes = () => {
+const AuthRoutes = () => {
   return (
     <Routes>
       <Route path="/register" element={<SignUp />} />
@@ -11,4 +11,4 @@ const AppRoutes = () => {
   );
 };
 
-export default AppRoutes;
+export default AuthRoutes;
