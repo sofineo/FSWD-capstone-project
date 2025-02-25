@@ -41,7 +41,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       const res = await api.post("/api/session", { email, password });
       const { user, token } = res.data;
 
-      localStorage.setItem("@app:user", JSON.stringify(user));
+      localStorage.setItem("@app:user", JSON.stringify(user.user_id));
       localStorage.setItem("@app:token", token);
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;

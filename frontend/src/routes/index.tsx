@@ -1,14 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./app.routes";
 import AuthRoutes from "./auth.routes";
+import { useAuth } from "@/context/AuthContext";
 
 const Routes = () => {
-  const token = false;
-  // return (
-  //   <BrowserRouter>
-  //   {token ? <AppRoutes /> : <AuthRoutes />}
-  //   </BrowserRouter>
-  // );
+  const { token } = useAuth();
 
   return token ? <AppRoutes /> : <AuthRoutes />;
 };

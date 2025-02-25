@@ -88,6 +88,10 @@ export function SignUp() {
       });
   }
 
+  function handleButtonSignIn() {
+    navigate("/")
+  }
+
   return (
     <>
       <Form {...form}>
@@ -304,6 +308,13 @@ export function SignUp() {
 
           <Button type="submit">Submit</Button>
         </form>
+
+        <FormDescription>
+          Already have an account?
+          <Button variant={"link"} className="p-1" onClick={handleButtonSignIn}>
+            Sign In
+          </Button>
+        </FormDescription>
       </Form>
     </>
   );

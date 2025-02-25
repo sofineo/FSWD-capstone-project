@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Counter } from "@/pages/Counter";
+import { Counter } from "@/pages/Home";
 
 const AppRoutes = () => {
   return (
