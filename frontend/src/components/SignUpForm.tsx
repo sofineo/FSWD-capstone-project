@@ -96,9 +96,6 @@ export function SignInForm({
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <span id="password-label" className="sr-only">
-                          Password
-                        </span>
                         <div className="flex items-center">
                           <FormLabel>Password</FormLabel>
                           <a
