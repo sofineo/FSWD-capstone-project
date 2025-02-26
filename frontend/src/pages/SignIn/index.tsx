@@ -1,6 +1,6 @@
 //https://ui.shadcn.com/docs/components/form
 //https://ui.shadcn.com/blocks/authentication
-import { SignInForm } from "../../components/SignUpForm";
+import { SignInForm } from "@/components/signInForm";
 
 export function SignIn() {
   return (
