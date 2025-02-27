@@ -1,7 +1,7 @@
 //https://ui.shadcn.com/docs/components/form
 //https://ui.shadcn.com/blocks/authentication
 
-import { SignUpForm } from "@/components/SignUpForm";
+import { SignUpForm } from "@/components/sign-up-form";
 
 export function SignUp() {
   return (

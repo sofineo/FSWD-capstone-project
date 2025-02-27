@@ -1,11 +1,14 @@
 import { Routes, Route } from "react-router-dom";
-import { Counter } from "@/pages/Home";
+import { Dashboard } from "@/app/Home/page";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
-      <Routes>
-        <Route path="/" element={<Counter />} />
-      </Routes>
+    <Routes>
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Dashboard />} />
+      </Route>
+    </Routes>
   );
 };
 
