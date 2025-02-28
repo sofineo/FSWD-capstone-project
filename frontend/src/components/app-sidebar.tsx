@@ -56,6 +56,11 @@ interface User {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuth();
   const [data, setData] = useState<User | null>(null);
+  const [refresh, setRefresh] = useState(false);
+
+  async function refetchUser() {
+    setRefresh((prev) => !prev);
+  }
 
   useEffect(() => {
     async function fetchUser() {
@@ -63,12 +68,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       setData(res.data);
     }
     fetchUser();
-  }, []);
+  }, [refresh]);
 
   return (
     <Sidebar {...props}>
       <SidebarHeader className="border-sidebar-border h-16 border-b">
-        <NavUser user={data} />
+        <NavUser user={data} refetchUser={refetchUser} />
       </SidebarHeader>
       <SidebarContent>
         <DatePicker />

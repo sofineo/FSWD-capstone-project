@@ -22,10 +22,14 @@ import {
 } from "@/components/ui/select";
 import { Toggle } from "@/components/ui/toggle";
 import { useState, useEffect } from "react";
-import { feetInchesToCm, lbsToKg } from "@/utils/conversion";
+import {
+  cmToFeetInches,
+  feetInchesToCm,
+  kgToLbs,
+  lbsToKg,
+} from "@/utils/conversion";
 import api from "@/services/api";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ProfileSchema } from "@/lib/validation/ProfileSchema";
@@ -54,14 +58,20 @@ type Gender =
   | "prefer-not-to-say"
   | "other";
 
-export function ProfileForm({ user, className, ...props }: ProfileFormProps) {
-  const [userData, setUserData] = useState(user);
+export function ProfileForm({
+  user,
+  className,
+  // refetchUser,
+  ...props
+}: ProfileFormProps) {
+  // const [userData, setUserData] = useState(user);
   //Metric System
   const [imperialSystem, setImperialSystem] = useState(false);
+  const [heightFeet, setHeightFeet] = useState<number | null>(null);
+  const [heightInches, setHeightInches] = useState<number | null>(null);
+  const [weightKgInches, setWeightKg] = useState<number | null>(null);
+  const [weightLbsInches, setWeightLbs] = useState<number | null>(null);
 
-  const navigate = useNavigate();
-
-  // 1. Define your form.
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: {
@@ -78,27 +88,17 @@ export function ProfileForm({ user, className, ...props }: ProfileFormProps) {
     },
   });
 
-  useEffect(() => {
-    if (user) {
-      form.reset({
-        email: userData?.email || "",
-        name: userData?.name || "",
-        age: userData?.age ?? null,
-        gender: (userData?.gender as Gender) || undefined,
-        heightCm: userData?.height ?? null,
-        weightKg: userData?.weight ?? null,
-      });
-    }
-  }, [user, form]);
-
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ProfileSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    let finalHeight =
-      values.heightCm ||
-      feetInchesToCm(values.heightFeet ?? 0, values.heightInches ?? 0);
-    let finalWeight = values.weightKg || lbsToKg(values.weightLbs ?? 0);
+  async function onSubmit(values: z.infer<typeof ProfileSchema>) {
+    // let finalHeight =
+    //   values.heightCm ||
+    //   feetInchesToCm(values.heightFeet ?? 0, values.heightInches ?? 0);
+    // let finalWeight = values.weightKg || lbsToKg(values.weightLbs ?? 0);
+    let finalHeight = imperialSystem
+      ? feetInchesToCm(values.heightFeet ?? 0, values.heightInches ?? 0)
+      : values.heightCm;
+    let finalWeight = imperialSystem
+      ? lbsToKg(values.weightLbs ?? 0)
+      : values.weightKg;
 
     const payload = {
       email: values.email,
@@ -110,13 +110,10 @@ export function ProfileForm({ user, className, ...props }: ProfileFormProps) {
       weight: finalWeight,
     };
 
-    console.log(user?.user_id);
     api
       .put(`/api/users/${user?.user_id}`, payload)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         toast("Profile successfully updated!");
-        navigate("/");
       })
       .catch((error) => {
         if (error.response) {
@@ -129,13 +126,35 @@ export function ProfileForm({ user, className, ...props }: ProfileFormProps) {
       });
   }
 
+  useEffect(() => {
+    if (user) {
+      const { feet, inches } = cmToFeetInches(user?.height || 0);
+      setHeightFeet(feet);
+      setHeightInches(inches);
+      setWeightKg(user?.weight || 0);
+      setWeightLbs(user?.weight ? kgToLbs(user.weight) : null);
+
+      form.reset({
+        email: user.email || "",
+        name: user.name || "",
+        age: user.age ?? null,
+        gender: (user.gender as Gender) || undefined,
+        heightCm: user.height ?? null,
+        weightKg: user.weight ?? null,
+        heightFeet: heightFeet ?? null,
+        heightInches: heightInches ?? null,
+        weightLbs: user.weight ? kgToLbs(user.weight) : null,
+      });
+
+      //React Hook Form does not immediately update the UI when you call form.reset()
+      setTimeout(() => {
+        form.setValue("gender", user.gender as Gender);
+      }, 0);
+    }
+  }, [user, form, imperialSystem]);
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      {/* <CardHeader>
-        <CardTitle className="text-2xl flex justify-between">
-          Update Your Profile
-        </CardTitle>
-      </CardHeader> */}
       <CardContent className="p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -229,11 +248,15 @@ export function ProfileForm({ user, className, ...props }: ProfileFormProps) {
                     <FormLabel>Gender</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={(field.value as Gender) || ""}
+                      defaultValue={user?.gender ?? ""}
                     >
                       <FormControl>
                         <SelectTrigger className="whitespace-nowrap">
-                          <SelectValue placeholder="Select your gender" />
+                          <SelectValue
+                            // placeholder={user?.gender ?? "Select your gender"}
+                            placeholder="Select your gender"
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

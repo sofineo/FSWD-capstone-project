@@ -50,8 +50,10 @@ interface User {
 
 export function NavUser({
   user,
+  refetchUser,
 }: {
   user: User | null;
+  refetchUser: () => void;
 }) {
   const { isMobile } = useSidebar();
   const { signOut } = useAuth();
@@ -132,7 +134,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DialogContent>
+          <DialogContent refetchUser={refetchUser}>
             <DialogHeader>
               <DialogTitle>Update Your Profile</DialogTitle>
               <DialogDescription>Keep your profile updated.</DialogDescription>
