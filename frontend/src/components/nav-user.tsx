@@ -134,15 +134,12 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DialogContent refetchUser={refetchUser}>
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>Update Your Profile</DialogTitle>
-              <DialogDescription>Keep your profile updated.</DialogDescription>
+              <DialogDescription>Keep your profile updated</DialogDescription>
             </DialogHeader>
-            <ProfileForm user={user} />
-            {/* <DialogFooter>
-              <Button type="submit">Confirm</Button>
-            </DialogFooter> */}
+            <ProfileForm user={user} refetchUser={refetchUser} />
           </DialogContent>
         </Dialog>
       </SidebarMenuItem>

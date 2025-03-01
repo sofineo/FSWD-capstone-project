@@ -33,20 +33,11 @@ import { toast } from "sonner";
 import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ProfileSchema } from "@/lib/validation/ProfileSchema";
-
-interface User {
-  user_id: string;
-  name: string;
-  email: string;
-  // avatar: string
-  age: number | null;
-  gender: string | null;
-  height: number | null;
-  weight: number | null;
-}
+import { User } from "@/lib/types/user";
 
 interface ProfileFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: User | null;
+  refetchUser: () => void;
 }
 
 type Gender =
@@ -61,7 +52,7 @@ type Gender =
 export function ProfileForm({
   user,
   className,
-  // refetchUser,
+  refetchUser,
   ...props
 }: ProfileFormProps) {
   // const [userData, setUserData] = useState(user);
@@ -69,8 +60,8 @@ export function ProfileForm({
   const [imperialSystem, setImperialSystem] = useState(false);
   const [heightFeet, setHeightFeet] = useState<number | null>(null);
   const [heightInches, setHeightInches] = useState<number | null>(null);
-  const [weightKgInches, setWeightKg] = useState<number | null>(null);
-  const [weightLbsInches, setWeightLbs] = useState<number | null>(null);
+  const [weightKg, setWeightKg] = useState<number | null>(null);
+  const [weightLbs, setWeightLbs] = useState<number | null>(null);
 
   const form = useForm<z.infer<typeof ProfileSchema>>({
     resolver: zodResolver(ProfileSchema),
@@ -89,10 +80,6 @@ export function ProfileForm({
   });
 
   async function onSubmit(values: z.infer<typeof ProfileSchema>) {
-    // let finalHeight =
-    //   values.heightCm ||
-    //   feetInchesToCm(values.heightFeet ?? 0, values.heightInches ?? 0);
-    // let finalWeight = values.weightKg || lbsToKg(values.weightLbs ?? 0);
     let finalHeight = imperialSystem
       ? feetInchesToCm(values.heightFeet ?? 0, values.heightInches ?? 0)
       : values.heightCm;
@@ -114,6 +101,8 @@ export function ProfileForm({
       .put(`/api/users/${user?.user_id}`, payload)
       .then(() => {
         toast("Profile successfully updated!");
+        refetchUser();
+        setImperialSystem(false); //for now the refetchUser first grab the metric system and converts
       })
       .catch((error) => {
         if (error.response) {
@@ -141,9 +130,9 @@ export function ProfileForm({
         gender: (user.gender as Gender) || undefined,
         heightCm: user.height ?? null,
         weightKg: user.weight ?? null,
-        heightFeet: heightFeet ?? null,
+        heightFeet: heightFeet ?? null, //Form is automatically set to Metric
         heightInches: heightInches ?? null,
-        weightLbs: user.weight ? kgToLbs(user.weight) : null,
+        weightLbs: weightLbs ?? null,
       });
 
       //React Hook Form does not immediately update the UI when you call form.reset()

@@ -44,16 +44,12 @@ function DialogOverlay({
   );
 }
 
-interface DialogContentProps extends React.ComponentPropsWithoutRef<"div"> {
-  refetchUser: () => void;
-}
-
 function DialogContent({
   className,
   children,
-  refetchUser,
+  // refetchUser,
   ...props
-}: DialogContentProps) {
+}: React.ComponentPropsWithoutRef<"div">) {
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
@@ -68,7 +64,6 @@ function DialogContent({
         {children}
         <DialogPrimitive.Close
           className="ring-offset-white focus:ring-slate-950 data-[state=open]:bg-slate-100 data-[state=open]:text-slate-500 absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 dark:ring-offset-slate-950 dark:focus:ring-slate-300 dark:data-[state=open]:bg-slate-800 dark:data-[state=open]:text-slate-400"
-          onClick={refetchUser}
         >
           <XIcon />
           <span className="sr-only">Close</span>

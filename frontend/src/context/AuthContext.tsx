@@ -10,16 +10,17 @@ import {
 import api from "@/services/api";
 import { toast } from "sonner";
 import axios from "axios";
-
-interface User {
-  user: object;
-}
+import { jwtDecode } from "jwt-decode";
 
 interface AuthContextType {
-  user: User | null;
+  user: string | null;
   token: string | null;
   signIn: (credentials: SignInData) => Promise<void>;
   signOut: () => void;
+}
+
+interface DecodedToken {
+  exp: number;
 }
 
 interface SignInData {
@@ -33,8 +34,18 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+
+  function isTokenValid(token: string): boolean {
+    try {
+      const decoded: DecodedToken = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000); //convert to seconds
+      return decoded.exp > currentTime;
+    } catch (error) {
+      return false;
+    }
+  }
 
   async function signIn({ email, password }: SignInData) {
     try {
@@ -46,7 +57,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      setUser(user);
+      setUser(user.user_id);
       setToken(token);
 
       toast(`Welcome, ${user.name}!`);
@@ -74,9 +85,13 @@ function AuthProvider({ children }: AuthProviderProps) {
     const storedToken = localStorage.getItem("@app:token");
 
     if (storedUser && storedToken) {
-      api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
-      setUser(JSON.parse(storedUser));
-      setToken(storedToken);
+      if (isTokenValid(storedToken)) {
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+        api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+      } else {
+        signOut();
+      }
     }
   }, []);
 

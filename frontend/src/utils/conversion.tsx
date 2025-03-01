@@ -1,5 +1,5 @@
 export function lbsToKg(lbs: number): number {
-  return Number((lbs / 2.20462).toFixed(2)); 
+  return Number((lbs / 2.20462).toFixed(2));
 }
 
 export function kgToLbs(kg: number): number {
@@ -15,4 +15,12 @@ export function cmToFeetInches(cm: number): { feet: number; inches: number } {
   const feet = Math.floor(totalInches / 12);
   const inches = Math.round(totalInches % 12);
   return { feet, inches };
+}
+
+export function kmToMiles(km: number): number {
+  return Number((km * 0.621371).toFixed(2));
+}
+
+export function milesToKm(miles: number): number {
+  return Number((miles / 0.621371).toFixed(2));
 }

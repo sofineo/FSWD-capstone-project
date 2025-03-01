@@ -18,6 +18,7 @@ import {
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { useAuth } from "@/context/AuthContext";
+import { User } from "@/lib/types/user";
 
 // This is sample data.
 const data1 = {
@@ -42,19 +43,16 @@ const data1 = {
   ],
 };
 
-interface User {
-  user_id: string;
-  name: string;
-  email: string;
-  // avatar: string
-  age: number | null;
-  gender: string | null;
-  height: number | null;
-  weight: number | null;
+interface AppSidebarProps {
+  user: string | null;
+  setSelectedDate: (date: Date) => void;
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useAuth();
+export function AppSidebar({
+  user,
+  setSelectedDate,
+  ...props
+}: AppSidebarProps) {
   const [data, setData] = useState<User | null>(null);
   const [refresh, setRefresh] = useState(false);
 
@@ -68,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       setData(res.data);
     }
     fetchUser();
-  }, [refresh]);
+  }, [user, refresh]);
 
   return (
     <Sidebar {...props}>
@@ -76,9 +74,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser user={data} refetchUser={refetchUser} />
       </SidebarHeader>
       <SidebarContent>
-        <DatePicker />
+        <DatePicker onDateChange={setSelectedDate} />
         <SidebarSeparator className="mx-0" />
-        <Calendars calendars={data1.calendars} />
+        {/* <Calendars calendars={data1.calendars} /> */}
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
