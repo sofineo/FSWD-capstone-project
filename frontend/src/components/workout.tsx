@@ -1,16 +1,22 @@
 import api from "@/services/api";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
+import { WorkoutForm } from "./workout-form";
+import { UpdateWorkoutForm } from "./update-workout-form";
 
 interface WorkoutProps {
   selectedDate: Date;
+  user: string | null;
 }
 
-export function Workout({ selectedDate, ...props }: WorkoutProps) {
+export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
   const [data, setData] = useState();
   const formatDate = format(selectedDate, "yyyy-MM-dd");
-  console.log(formatDate);
-  console.dir(data);
+  const [refresh, setRefresh] = useState(false);
+
+  async function refetchWorkout() {
+    setRefresh((prev) => !prev);
+  }
 
   useEffect(() => {
     async function fetchWorkout() {
@@ -18,7 +24,24 @@ export function Workout({ selectedDate, ...props }: WorkoutProps) {
       setData(res.data.result);
     }
     fetchWorkout();
-  }, [selectedDate]);
+  }, [selectedDate, refresh]);
 
-  return <>{data && <h1>Hi</h1>}</>;
+  return (
+    <>
+      {data && (
+        <UpdateWorkoutForm
+          user={user}
+          selectedDate={formatDate}
+          refetchWorkout={refetchWorkout}
+        />
+      )}
+      {!data && (
+        <WorkoutForm
+          user={user}
+          selectedDate={formatDate}
+          refetchWorkout={refetchWorkout}
+        />
+      )}
+    </>
+  );
 }

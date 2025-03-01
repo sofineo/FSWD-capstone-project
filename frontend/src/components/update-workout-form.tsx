@@ -35,13 +35,15 @@ interface WorkoutFormProps extends React.ComponentPropsWithoutRef<"div"> {
   refetchWorkout: () => void;
 }
 
-export function WorkoutForm({
+export function UpdateWorkoutForm({
   user,
   selectedDate,
   refetchWorkout,
   className,
   ...props
 }: WorkoutFormProps) {
+  console.log("Update workout")
+
   //Metric System
   const [imperialSystem, setImperialSystem] = useState(false);
 

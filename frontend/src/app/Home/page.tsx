@@ -53,7 +53,7 @@ export function Dashboard() {
               Make changes to your goals here.
             </TabsContent>
             <TabsContent value="workout">
-              <Workout selectedDate={selectedDate} />
+              <Workout selectedDate={selectedDate} user={user} />
             </TabsContent>
             <TabsContent value="sleep">
               Make changes your sleep here.
