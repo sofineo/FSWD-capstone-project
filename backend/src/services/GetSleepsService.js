@@ -5,7 +5,7 @@ class GetSleepsService {
 
   async execute(userId, date) {
     if (date) {
-      const sleepByDate = await this.sleepRepository.findByDate(userId, date);
+      const sleepByDate = await this.sleepRepository.findByDate(date, userId);
 
       return sleepByDate;
     }

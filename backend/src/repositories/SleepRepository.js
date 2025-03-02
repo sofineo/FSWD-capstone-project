@@ -11,6 +11,8 @@ const { dynamoDB } = require("../config/awsConfig");
 
 class SleepRepository {
   async findByDate(date, userId) {
+    console.log(date);
+
     const params = new QueryCommand({
       TableName: SLEEP_TABLE,
       IndexName: "date-user_id-index",
