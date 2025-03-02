@@ -57,8 +57,6 @@ export function SleepForm({
       sleep_goal: values.sleep_goal,
     };
 
-    console.log(payload);
-
     api
       .post(`/api/sleep`, payload)
       .then(() => {
@@ -79,7 +77,6 @@ export function SleepForm({
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <CardContent className="p-0">
-
         {/** Date **/}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
