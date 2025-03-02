@@ -20,6 +20,7 @@ import api from "@/services/api";
 import { User } from "@/lib/types/user";
 import { WorkoutForm } from "./workout-form";
 import { SidebarDialog } from "./sidebar-dialog";
+import { SleepForm } from "./sleep-form";
 
 interface AppSidebarProps {
   user: string | null;
@@ -70,10 +71,16 @@ export function AppSidebar({
               FormComponent={WorkoutForm}
               formProps={{ user }}
             />
-            <SidebarMenuButton>
-              <Plus />
-              <span>Log Sleep</span>
-            </SidebarMenuButton>
+            <SidebarDialog
+              title="Log Sleep Record"
+              description="Add details about your sleep record."
+              buttonText="Log Sleep Record"
+              dialogKey="sleep"
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              FormComponent={SleepForm}
+              formProps={{ user }}
+            />
             <SidebarMenuButton>
               <Plus />
               <span>Log Water Intake</span>
