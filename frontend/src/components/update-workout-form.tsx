@@ -13,56 +13,68 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Toggle } from "@/components/ui/toggle";
-import { useState } from "react";
-import { kmToMiles } from "@/utils/conversion";
+import { useEffect, useState } from "react";
+import { kmToMiles, milesToKm } from "@/utils/conversion";
 import api from "@/services/api";
 import { toast } from "sonner";
 import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WorkoutSchema } from "@/lib/validation/WorkoutSchema";
+import { Workout } from "@/lib/types/workout";
 
 interface WorkoutFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: string | null;
-  selectedDate: string;
+  data: Workout;
   refetchWorkout: () => void;
 }
 
+type WorkoutType =
+  | "cardio"
+  | "resistance"
+  | "hiit"
+  | "recovery"
+  | "mobility"
+  | "functional"
+  | "powerlifting"
+  | "olympic-lifting"
+  | "calisthenics"
+  | "plyometrics"
+  | "core"
+  | "sport-specific"
+  | "endurance"
+  | "balance";
+
 export function UpdateWorkoutForm({
   user,
-  selectedDate,
   refetchWorkout,
   className,
+  data,
   ...props
 }: WorkoutFormProps) {
-  console.log("Update workout")
-
   //Metric System
   const [imperialSystem, setImperialSystem] = useState(false);
 
   const form = useForm<z.infer<typeof WorkoutSchema>>({
     resolver: zodResolver(WorkoutSchema),
     defaultValues: {
-      workout_type: undefined,
-      duration: null,
-      distanceKm: null,
-      distanceMi: null,
-      calories_burned: null,
-      date: selectedDate,
+      workout_type: data.workout_type as WorkoutType,
+      duration: data.duration,
+      distanceKm: data.distance,
+      distanceMi: data.distance ? kmToMiles(data.distance) : null,
+      calories_burned: data.calories_burned,
+      date: data.date,
     },
   });
 
   function onSubmit(values: z.infer<typeof WorkoutSchema>) {
-    console.log("Form submitted, values:", values);
+    let finalDistance = null;
 
-    let finalDistance = values.distanceKm || kmToMiles(values.distanceMi ?? 0);
+    if (imperialSystem && values.distanceMi) {
+      finalDistance = milesToKm(values.distanceMi);
+    } else {
+      finalDistance = values.distanceKm;
+    }
 
     const payload = {
       workout_type: values.workout_type,
@@ -73,10 +85,9 @@ export function UpdateWorkoutForm({
     };
 
     api
-      .post(`/api/workouts`, payload)
+      .put(`/api/workouts/${data.workout_id}`, payload)
       .then(() => {
-        console.log(payload);
-        toast("Workout logged successfully!");
+        toast("Workout updated successfully!");
         refetchWorkout();
       })
       .catch((error) => {
@@ -84,60 +95,36 @@ export function UpdateWorkoutForm({
           toast(error.response.data.message);
         } else {
           toast(
-            "We were unable to logged your workout. Please try again later."
+            "We were unable to update your workout. Please try again later."
           );
         }
       });
   }
+
+  useEffect(() => {
+    const currentDistance = form.getValues(
+      imperialSystem ? "distanceKm" : "distanceMi"
+    );
+
+    if (imperialSystem) {
+      form.setValue(
+        "distanceMi",
+        currentDistance ? kmToMiles(currentDistance) : null
+      );
+    } else {
+      form.setValue(
+        "distanceKm",
+        currentDistance ? milesToKm(currentDistance) : null
+      );
+    }
+  }, [imperialSystem, data]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <CardContent className="p-0">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            {/* Gender */}
-            <FormField
-              control={form.control}
-              name="workout_type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Workout type</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="whitespace-nowrap">
-                        <SelectValue placeholder="Select the workout type" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="cardio">Cardio</SelectItem>
-                      <SelectItem value="resistance">Resistance</SelectItem>
-                      <SelectItem value="hiit">HIIT</SelectItem>
-                      <SelectItem value="recovery">Recovery</SelectItem>
-                      <SelectItem value="mobility">Mobility</SelectItem>
-                      <SelectItem value="functional">Functional</SelectItem>
-                      <SelectItem value="powerlifting">Powerlifting</SelectItem>
-                      <SelectItem value="olympic-lifting">
-                        Olympic-lifting
-                      </SelectItem>
-                      <SelectItem value="calisthenics">Calisthenics</SelectItem>
-                      <SelectItem value="plyometrics">Plyometrics</SelectItem>
-                      <SelectItem value="core">Core</SelectItem>
-                      <SelectItem value="sport-specific">
-                        Sport-specific
-                      </SelectItem>
-                      <SelectItem value="endurance">Endurance</SelectItem>
-                      <SelectItem value="balance">Balance</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Height */}
+            {/* Duration */}
             <FormField
               control={form.control}
               name="duration"
@@ -149,13 +136,18 @@ export function UpdateWorkoutForm({
                       {...field}
                       type="number"
                       value={field.value ?? ""}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      onChange={(e) => {
+                        const newValue = e.target.valueAsNumber;
+                        field.onChange(isNaN(newValue) ? null : newValue);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
+            {/* Distance */}
             <FormField
               control={form.control}
               name={imperialSystem ? "distanceMi" : "distanceKm"}
@@ -169,7 +161,10 @@ export function UpdateWorkoutForm({
                       {...field}
                       type="number"
                       value={field.value ?? ""}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      onChange={(e) => {
+                        const newValue = e.target.valueAsNumber;
+                        field.onChange(isNaN(newValue) ? null : newValue);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -177,7 +172,7 @@ export function UpdateWorkoutForm({
               )}
             />
 
-            {/* Weight */}
+            {/* Calories Burned */}
             <FormField
               control={form.control}
               name="calories_burned"
@@ -189,7 +184,10 @@ export function UpdateWorkoutForm({
                       {...field}
                       type="number"
                       value={field.value ?? ""}
-                      onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                      onChange={(e) => {
+                        const newValue = e.target.valueAsNumber;
+                        field.onChange(isNaN(newValue) ? null : newValue);
+                      }}
                     />
                   </FormControl>
                   <FormMessage />
@@ -212,7 +210,7 @@ export function UpdateWorkoutForm({
             </Toggle>
 
             <Button type="submit" className="w-full">
-              Log Workout
+              Update Workout
             </Button>
           </form>
         </Form>

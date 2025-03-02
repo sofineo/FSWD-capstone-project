@@ -26,5 +26,5 @@ export const WorkoutSchema = z.object({
   duration: z.number().min(1).max(300).nullable().optional(), //up to 5 hours
   distanceKm: z.number().min(1).max(100).nullable().optional(),
   distanceMi: z.number().min(1).max(100).nullable().optional(),
-  calories_burned: z.number().min(0).max(11).nullable().optional(),
+  calories_burned: z.number().min(0).max(3000).nullable().optional(),
 });

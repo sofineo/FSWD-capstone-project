@@ -17,31 +17,9 @@ import {
 } from "@/components/ui/sidebar";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
-import { useAuth } from "@/context/AuthContext";
 import { User } from "@/lib/types/user";
-
-// This is sample data.
-const data1 = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  calendars: [
-    {
-      name: "My Calendars",
-      items: ["Personal", "Work", "Family"],
-    },
-    {
-      name: "Favorites",
-      items: ["Holidays", "Birthdays"],
-    },
-    {
-      name: "Other",
-      items: ["Travel", "Reminders", "Deadlines"],
-    },
-  ],
-};
+import { WorkoutForm } from "./workout-form";
+import { SidebarDialog } from "./sidebar-dialog";
 
 interface AppSidebarProps {
   user: string | null;
@@ -55,6 +33,7 @@ export function AppSidebar({
 }: AppSidebarProps) {
   const [data, setData] = useState<User | null>(null);
   const [refresh, setRefresh] = useState(false);
+  const [openDialog, setOpenDialog] = useState<string | null>(null);
 
   async function refetchUser() {
     setRefresh((prev) => !prev);
@@ -81,9 +60,23 @@ export function AppSidebar({
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
+            <SidebarDialog
+              title="Log Workout"
+              description="Add details about your workout session."
+              buttonText="Log Workout"
+              dialogKey="workout"
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              FormComponent={WorkoutForm}
+              formProps={{ user }}
+            />
             <SidebarMenuButton>
               <Plus />
-              <span>New Calendar</span>
+              <span>Log Sleep</span>
+            </SidebarMenuButton>
+            <SidebarMenuButton>
+              <Plus />
+              <span>Log Water Intake</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
