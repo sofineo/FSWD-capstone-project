@@ -11,8 +11,6 @@ const { dynamoDB } = require("../config/awsConfig");
 
 class SleepRepository {
   async findByDate(date, userId) {
-    console.log(date);
-
     const params = new QueryCommand({
       TableName: SLEEP_TABLE,
       IndexName: "date-user_id-index",
@@ -97,7 +95,7 @@ class SleepRepository {
 
     const params = new UpdateCommand({
       TableName: SLEEP_TABLE,
-      Key: { sleep_id: sleepId },
+      Key: { sleep_id: sleepId }, 
       UpdateExpression: updateExpression,
       ExpressionAttributeNames: expressionAttributeNames,
       ExpressionAttributeValues: expressionAttributeValues,
