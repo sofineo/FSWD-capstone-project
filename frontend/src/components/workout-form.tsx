@@ -64,13 +64,16 @@ export function WorkoutForm({
 
   function onSubmit(values: z.infer<typeof WorkoutSchema>) {
     let finalDistance = values.distanceKm || kmToMiles(values.distanceMi ?? 0);
+    const formattedDate = values.date
+      ? format(new Date(values.date), "yyyy-MM-dd")
+      : format(new Date(), "yyyy-MM-dd");
 
     const payload = {
       workout_type: values.workout_type,
       duration: values.duration,
       distance: finalDistance,
       calories_burned: values.calories_burned,
-      date: values.date,
+      date: formattedDate,
     };
 
     api
@@ -93,7 +96,6 @@ export function WorkoutForm({
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <CardContent className="p-0">
-
         {/** Date **/}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
