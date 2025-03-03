@@ -24,3 +24,11 @@ export function kmToMiles(km: number): number {
 export function milesToKm(miles: number): number {
   return Number((miles / 0.621371).toFixed(2));
 }
+
+export function mlToOz(ml: number): number {
+  return Number((ml / 29.5735).toFixed(2));
+}
+
+export function ozToMl(oz: number): number {
+  return Number((oz * 29.5735).toFixed(2));
+}

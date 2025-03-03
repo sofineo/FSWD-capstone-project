@@ -1,7 +1,3 @@
-import * as React from "react";
-import { Plus } from "lucide-react";
-
-import { Calendars } from "@/components/calendars";
 import { DatePicker } from "@/components/date-picker";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -10,7 +6,6 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
   SidebarSeparator,
@@ -21,6 +16,7 @@ import { User } from "@/lib/types/user";
 import { WorkoutForm } from "./workout-form";
 import { SidebarDialog } from "./sidebar-dialog";
 import { SleepForm } from "./sleep-form";
+import { WaterForm } from "./water-form";
 
 interface AppSidebarProps {
   user: string | null;
@@ -81,10 +77,16 @@ export function AppSidebar({
               FormComponent={SleepForm}
               formProps={{ user }}
             />
-            <SidebarMenuButton>
-              <Plus />
-              <span>Log Water Intake</span>
-            </SidebarMenuButton>
+            <SidebarDialog
+              title="Log Water Intake Record"
+              description="Add details about your water intake record."
+              buttonText="Log Water Intake Record"
+              dialogKey="water"
+              openDialog={openDialog}
+              setOpenDialog={setOpenDialog}
+              FormComponent={WaterForm}
+              formProps={{ user }}
+            />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

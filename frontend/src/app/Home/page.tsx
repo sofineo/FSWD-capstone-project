@@ -18,6 +18,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Workout } from "@/components/workout";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Sleep } from "@/components/sleep";
+import { Water } from "@/components/water";
 
 export function Dashboard() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -72,7 +73,7 @@ export function Dashboard() {
                   <Sleep selectedDate={selectedDate} user={user} />
                 </TabsContent>
                 <TabsContent value="water">
-                  Make changes to your water here.
+                  <Water selectedDate={selectedDate} user={user} />
                 </TabsContent>
               </>
             )}
