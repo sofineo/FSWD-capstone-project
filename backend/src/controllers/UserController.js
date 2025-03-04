@@ -17,7 +17,7 @@ class UserController {
   }
 
   async create(req, res) {
-    const { name, email, password, age, gender, height, weight } = req.body;
+    const { name, email, password, age, gender, height, weight, imperialSystem } = req.body;
 
     //TODO: Validate input
 
@@ -29,6 +29,7 @@ class UserController {
       gender: gender,
       height: height,
       weight: weight,
+      imperialSystem: imperialSystem,
     };
 
     const newUser = await this.createUserService.execute(userData);
