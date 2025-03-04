@@ -1,12 +1,6 @@
 import api from "@/services/api";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
 import { SkeletonCard } from "./ui/skeleton-card";
 import {
   Popover,

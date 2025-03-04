@@ -19,10 +19,10 @@ import { toast } from "sonner";
 import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { SleepSchema } from "@/lib/validation/SleepSchema";
+import { format, toZonedTime } from "date-fns-tz";
 
 interface SleepFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: string | null;
@@ -47,9 +47,9 @@ export function SleepForm({
   });
 
   function onSubmit(values: z.infer<typeof SleepSchema>) {
-    const formattedDate = values.date
-      ? format(new Date(values.date), "yyyy-MM-dd")
-      : format(new Date(), "yyyy-MM-dd");
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const zonedDate = toZonedTime(values.date, timeZone);
+    const formattedDate = format(zonedDate, "yyyy-MM-dd", { timeZone });
 
     const payload = {
       date: formattedDate,

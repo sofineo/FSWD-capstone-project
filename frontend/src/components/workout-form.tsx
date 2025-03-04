@@ -30,9 +30,9 @@ import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WorkoutSchema } from "@/lib/validation/WorkoutSchema";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
+import { format, toZonedTime } from "date-fns-tz";
 
 interface WorkoutFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: string | null;
@@ -64,9 +64,9 @@ export function WorkoutForm({
 
   function onSubmit(values: z.infer<typeof WorkoutSchema>) {
     let finalDistance = values.distanceKm || kmToMiles(values.distanceMi ?? 0);
-    const formattedDate = values.date
-      ? format(new Date(values.date), "yyyy-MM-dd")
-      : format(new Date(), "yyyy-MM-dd");
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const zonedDate = toZonedTime(values.date, timeZone);
+    const formattedDate = format(zonedDate, "yyyy-MM-dd", { timeZone });
 
     const payload = {
       workout_type: values.workout_type,
