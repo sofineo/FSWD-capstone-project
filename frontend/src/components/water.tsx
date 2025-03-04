@@ -1,12 +1,6 @@
 import api from "@/services/api";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
 import { SkeletonCard } from "./ui/skeleton-card";
 import {
   Popover,
@@ -16,9 +10,9 @@ import {
 import { Button } from "./ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { SleepForm } from "./sleep-form";
-import type { Sleep } from "@/lib/types/sleep";
-import { UpdateSleepForm } from "./update-sleep-form";
+import { WaterIntake } from "@/lib/types/water-intake";
+import { WaterForm } from "./water-form";
+import { UpdateWaterIntakeForm } from "./update-water-form";
 
 interface SleepProps {
   selectedDate: Date;
@@ -26,28 +20,28 @@ interface SleepProps {
 }
 
 export function Water({ selectedDate, user, ...props }: SleepProps) {
-  const [data, setData] = useState<Sleep[] | null>(null);
+  const [data, setData] = useState<WaterIntake[] | null>(null);
   const [loading, setLoading] = useState(true);
   const formatDate = format(selectedDate, "yyyy-MM-dd");
   const [refresh, setRefresh] = useState(false);
 
-  async function retchSleep() {
+  async function refetchWaterIntake() {
     setRefresh((prev) => !prev);
   }
 
-  async function handleDeleteButton(sleep_id: string) {
+  async function handleDeleteButton(water_intake_id: string) {
     api
-      .delete(`/api/sleep/${sleep_id}`)
+      .delete(`/api/water-intake/${water_intake_id}`)
       .then(() => {
-        toast("Sleep record deleted successfully!");
-        retchSleep();
+        toast("Water intake record deleted successfully!");
+        refetchWaterIntake();
       })
       .catch((error) => {
         if (error.response) {
           toast(error.response.data.message);
         } else {
           toast(
-            "We were unable to delete your sleep record. Please try again later."
+            "We were unable to delete your water intake record. Please try again later."
           );
         }
       });
@@ -56,8 +50,8 @@ export function Water({ selectedDate, user, ...props }: SleepProps) {
   useEffect(() => {
     async function fetchSleep() {
       setLoading(true);
-      const res = await api.get(`/api/sleep?date=${formatDate}`);
-      setData(res.data?.length ? res.data : null);
+      const res = await api.get(`/api/water-intake?date=${formatDate}`);
+      setData(res.data.result?.length ? res.data.result : null);
 
       setLoading(false);
     }
@@ -71,13 +65,18 @@ export function Water({ selectedDate, user, ...props }: SleepProps) {
   return (
     <div>
       {data ? (
-        data.map((sleep) => (
-          <div className="ps-1" key={sleep.sleep_id}>
+        data.map((water) => (
+          <div className="ps-1" key={water.water_intake_id}>
             <div className="text-sm">
               <p>
-                Duration: {sleep.sleep_hours ? `${sleep.sleep_hours} hr` : "-"}{" "}
+                Consumption:{" "}
+                {water.water_consumed_ml
+                  ? `${water.water_consumed_ml} ml`
+                  : "-"}
               </p>
-              <p>Goal: {sleep.sleep_goal ? `${sleep.sleep_goal} hr` : "-"}</p>
+              <p>
+                Goal: {water.water_goal_ml ? `${water.water_goal_ml} ml` : "-"}
+              </p>
             </div>
             <div className="mt-2 flex gap-2">
               <Popover>
@@ -87,10 +86,10 @@ export function Water({ selectedDate, user, ...props }: SleepProps) {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent align={"start"}>
-                  <UpdateSleepForm
+                  <UpdateWaterIntakeForm
                     user={user}
-                    data={sleep}
-                    retchSleep={retchSleep}
+                    data={water}
+                    refetchWaterIntake={refetchWaterIntake}
                   />
                 </PopoverContent>
               </Popover>
@@ -98,7 +97,7 @@ export function Water({ selectedDate, user, ...props }: SleepProps) {
                 variant={"outline2"}
                 size={"icon"}
                 onClick={() => {
-                  handleDeleteButton(sleep.sleep_id);
+                  handleDeleteButton(water.water_intake_id);
                 }}
               >
                 <Trash2 className="w-4 h-4" />
@@ -107,10 +106,10 @@ export function Water({ selectedDate, user, ...props }: SleepProps) {
           </div>
         ))
       ) : (
-        <SleepForm
+        <WaterForm
           user={user}
           selectedDate={formatDate}
-          retchSleep={retchSleep}
+          refetchWaterIntake={refetchWaterIntake}
         />
       )}
     </div>

@@ -82,7 +82,7 @@ export function WaterButtons({
         variant="outline"
         onClick={() => addWater(1000)}
         size={"sm"}
-        className={imperialSystem ? "hidden" : "flex justify-start"}
+        className={imperialSystem ? "hidden" : "flex"}
       >
         <div className="flex mr-1">
           <Droplets className="w-5 h-5 text-blue-600" />

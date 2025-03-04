@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import { CalendarIcon, RefreshCcw } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 import { WaterSchema } from "@/lib/validation/WaterSchema";
@@ -27,17 +27,18 @@ import { WaterButtons } from "./water-buttons";
 import { useState } from "react";
 import { Toggle } from "./ui/toggle";
 import { ozToMl } from "@/utils/conversion";
+import { toZonedTime, format } from "date-fns-tz";
 
 interface WaterFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: string | null;
   selectedDate?: string;
-  retchSleep?: () => void;
+  refetchWaterIntake?: () => void;
 }
 
 export function WaterForm({
   user,
   selectedDate,
-  retchSleep,
+  refetchWaterIntake,
   className,
   ...props
 }: WaterFormProps) {
@@ -58,9 +59,9 @@ export function WaterForm({
   }
 
   function onSubmit(values: z.infer<typeof WaterSchema>) {
-    const formattedDate = values.date
-      ? format(new Date(values.date), "yyyy-MM-dd")
-      : format(new Date(), "yyyy-MM-dd");
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const zonedDate = toZonedTime(values.date, timeZone);
+    const formattedDate = format(zonedDate, "yyyy-MM-dd", { timeZone });
 
     const finalWaterConsumed = imperialSystem
       ? ozToMl(Number(values.water_consumed_ml))
@@ -76,11 +77,12 @@ export function WaterForm({
       water_goal_ml: finalWaterGoal,
     };
 
+    console.log(payload);
     api
       .post(`/api/water-intake`, payload)
       .then(() => {
         toast("Sleep record logged successfully!");
-        retchSleep?.(); //Only refresh if the workout happen inside the Tab
+        refetchWaterIntake?.(); //Only refresh if the workout happen inside the Tab
       })
       .catch((error) => {
         if (error.response) {
@@ -99,7 +101,7 @@ export function WaterForm({
         {/** Date **/}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            <div className="grid grid-cols-2 gap-2">
+            <div className={`grid ${selectedDate ?? "grid-cols-2 gap-2"}`}>
               {!selectedDate && (
                 <FormField
                   control={form.control}
@@ -182,8 +184,14 @@ export function WaterForm({
                   <FormLabel>
                     Water Intake {imperialSystem ? "(oz)" : "(ml)"}
                   </FormLabel>
-                  <div className="flex gap-2">
-                    <div className="flex flex-col w-1/3">
+                  <div
+                    className={`flex gap-2 ${selectedDate ? "flex-col" : ""}`}
+                  >
+                    <div
+                      className={`flex flex-col ${
+                        selectedDate ? "" : "w-1/3"
+                      } `}
+                    >
                       <FormControl>
                         <Input
                           {...field}
@@ -201,7 +209,7 @@ export function WaterForm({
                       <FormMessage />
                     </div>
 
-                    <div className="flex w-2/3">
+                    <div className={`flex ${selectedDate ? "" : "w-2/3"} `}>
                       <WaterButtons
                         imperialSystem={imperialSystem}
                         addWater={(amount) => {
