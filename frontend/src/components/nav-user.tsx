@@ -36,6 +36,7 @@ import {
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "./ui/button";
 import { ProfileForm } from "./profile-form";
+import { useEffect, useState } from "react";
 
 interface User {
   user_id: string;
@@ -58,11 +59,31 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const { signOut } = useAuth();
   const navigate = useNavigate();
+  const [initials, setInitials] = useState("");
+
+  function getInitials(name: string): string {
+    const words = name.trim().split(" ");
+
+    if (words.length === 1) {
+      return words[0].charAt(0).toUpperCase();
+    }
+
+    return (
+      words[0].charAt(0) + words[words.length - 1].charAt(0)
+    ).toUpperCase();
+  }
 
   function handleButtonLogOut() {
     signOut();
     navigate("/");
   }
+
+  useEffect(() => {
+    if (user) {
+      let initials = getInitials(user.name);
+      setInitials(initials);
+    }
+  }, [user]);
 
   return (
     <SidebarMenu>
@@ -76,7 +97,9 @@ export function NavUser({
               >
                 <Avatar className="h-8 w-8 rounded-lg">
                   {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {initials}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user?.name}</span>
