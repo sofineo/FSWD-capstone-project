@@ -18,10 +18,6 @@ import api from "@/services/api";
 import { toast } from "sonner";
 import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { Calendar } from "./ui/calendar";
 import { SleepSchema } from "@/lib/validation/SleepSchema";
 import { Sleep } from "@/lib/types/sleep";
 
@@ -50,12 +46,6 @@ export function UpdateSleepForm({
   });
 
   function onSubmit(values: z.infer<typeof SleepSchema>) {
-    if (!data.sleep_id) {
-      console.error("Missing sleep_id:", data);
-      toast.error("Error: Missing sleep record ID.");
-      return;
-    }
-
     const payload = {
       date: values.date,
       sleep_hours: values.sleep_hours,
