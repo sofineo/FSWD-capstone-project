@@ -37,17 +37,7 @@ import { DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "./ui/button";
 import { ProfileForm } from "./profile-form";
 import { useEffect, useState } from "react";
-
-interface User {
-  user_id: string;
-  name: string;
-  email: string;
-  // avatar: string
-  age: number | null;
-  gender: string | null;
-  height: number | null;
-  weight: number | null;
-}
+import { User } from "@/lib/types/user";
 
 export function NavUser({
   user,

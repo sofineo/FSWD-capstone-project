@@ -71,6 +71,7 @@ export function ProfileForm({
       name: "",
       age: null,
       gender: undefined,
+      imperialSystem: imperialSystem,
       heightCm: null,
       heightFeet: null,
       heightInches: null,
@@ -83,18 +84,19 @@ export function ProfileForm({
     let finalHeight = imperialSystem
       ? feetInchesToCm(values.heightFeet ?? 0, values.heightInches ?? 0)
       : values.heightCm;
-    let finalWeight = imperialSystem
-      ? lbsToKg(values.weightLbs ?? 0)
-      : values.weightKg;
+    // let finalWeight = imperialSystem
+    //   ? lbsToKg(values.weightLbs ?? 0)
+    //   : values.weightKg;
 
     const payload = {
       email: values.email,
       password: values.password.password ? values.password.password : undefined,
       name: values.name,
       age: values.age,
+      imperialSystem: imperialSystem,
       gender: values.gender,
       height: finalHeight,
-      weight: finalWeight,
+      weight: imperialSystem ? values.weightLbs : values.weightKg,
     };
 
     api
@@ -102,7 +104,7 @@ export function ProfileForm({
       .then(() => {
         toast("Profile successfully updated!");
         refetchUser();
-        setImperialSystem(false); //for now the refetchUser first grab the metric system and converts
+        // setImperialSystem(false); //for now the refetchUser first grab the metric system and converts
       })
       .catch((error) => {
         if (error.response) {
@@ -116,23 +118,35 @@ export function ProfileForm({
   }
 
   useEffect(() => {
+    setImperialSystem(user?.imperialSystem ?? false);
+  }, []);
+
+  useEffect(() => {
     if (user) {
       const { feet, inches } = cmToFeetInches(user?.height || 0);
       setHeightFeet(feet);
       setHeightInches(inches);
-      setWeightKg(user?.weight || 0);
-      setWeightLbs(user?.weight ? kgToLbs(user.weight) : null);
+
+      if (user.imperialSystem) {
+        setWeightKg(user?.weight ? lbsToKg(user.weight) : null);
+        console.log(weightKg);
+        setWeightLbs(user?.weight || null);
+      } else {
+        setWeightKg(user?.weight || null);
+        setWeightLbs(user?.weight ? kgToLbs(user.weight) : null);
+      }
 
       form.reset({
         email: user.email || "",
         name: user.name || "",
         age: user.age ?? null,
         gender: (user.gender as Gender) || undefined,
+        imperialSystem: imperialSystem,
         heightCm: user.height ?? null,
-        weightKg: user.weight ?? null,
+        weightKg: user.imperialSystem ? weightKg : user.weight,
         heightFeet: heightFeet ?? null, //Form is automatically set to Metric
         heightInches: heightInches ?? null,
-        weightLbs: weightLbs ?? null,
+        weightLbs: user.imperialSystem ? user.weight : weightLbs,
       });
 
       //React Hook Form does not immediately update the UI when you call form.reset()
@@ -207,7 +221,7 @@ export function ProfileForm({
               )}
             />
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {/* Age */}
               <FormField
                 control={form.control}
@@ -233,7 +247,7 @@ export function ProfileForm({
                 control={form.control}
                 name="gender"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="col-span-2">
                     <FormLabel>Gender</FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -262,6 +276,34 @@ export function ProfileForm({
                         <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Units & Measurements Preference  */}
+              <FormField
+                control={form.control}
+                name="imperialSystem"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Units</FormLabel>
+                    <FormControl>
+                      {/* Toggle Imperial System and Metric System */}
+                      <Toggle
+                        size="sm"
+                        className="h-9"
+                        variant={"outline2"}
+                        aria-label="Toggle Imperial System and Metric System"
+                        pressed={field.value}
+                        onPressedChange={(value) => {
+                          field.onChange(value);
+                          setImperialSystem(value);
+                        }}
+                      >
+                        {imperialSystem ? "ft/in/lbs/oz" : "cm/kg/ml"}
+                      </Toggle>
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -335,20 +377,6 @@ export function ProfileForm({
                 </FormItem>
               )}
             />
-
-            {/* Toggle Imperial System and Metric System */}
-            <Toggle
-              size="sm"
-              className="w-full"
-              variant={"outline2"}
-              aria-label="Toggle Imperial System and Metric System"
-              pressed={imperialSystem}
-              onPressedChange={setImperialSystem}
-            >
-              {imperialSystem
-                ? "Metric System (cm/kg)"
-                : "Imperial System (ft/in/lbs)"}
-            </Toggle>
 
             <Button type="submit" className="w-full">
               Update

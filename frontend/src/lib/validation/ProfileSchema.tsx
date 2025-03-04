@@ -37,6 +37,7 @@ export const ProfileSchema = z.object({
       "other",
     ])
     .optional(),
+  imperialSystem: z.boolean(),
   heightCm: z.number().min(50).max(300).nullable().optional(),
   heightFeet: z.number().min(1).max(8).nullable().optional(),
   heightInches: z.number().min(0).max(11).nullable().optional(),
