@@ -35,9 +35,9 @@ import { cn } from "@/lib/utils";
 import { ProfileSchema } from "@/lib/validation/ProfileSchema";
 import { User } from "@/lib/types/user";
 import {
-  ImperialSystemProvider,
   useImperialSystem,
 } from "@/context/imperialSystemContext";
+import { DialogClose } from "./ui/dialog";
 
 interface ProfileFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: User | null;
@@ -383,10 +383,11 @@ export function ProfileForm({
                 </FormItem>
               )}
             />
-
-            <Button type="submit" className="w-full">
-              Update
-            </Button>
+            <DialogClose asChild>
+              <Button type="submit" className="w-full">
+                Update
+              </Button>
+            </DialogClose>
           </form>
         </Form>
       </CardContent>
