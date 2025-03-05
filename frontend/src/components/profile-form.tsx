@@ -34,6 +34,10 @@ import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ProfileSchema } from "@/lib/validation/ProfileSchema";
 import { User } from "@/lib/types/user";
+import {
+  ImperialSystemProvider,
+  useImperialSystem,
+} from "@/context/imperialSystemContext";
 
 interface ProfileFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: User | null;
@@ -55,9 +59,9 @@ export function ProfileForm({
   refetchUser,
   ...props
 }: ProfileFormProps) {
-  // const [userData, setUserData] = useState(user);
   //Metric System
-  const [imperialSystem, setImperialSystem] = useState(false);
+  const { toggleImperialSystem } = useImperialSystem();
+  const [imperialSystemProfile, setImperialSystemProfile] = useState(false);
   const [heightFeet, setHeightFeet] = useState<number | null>(null);
   const [heightInches, setHeightInches] = useState<number | null>(null);
   const [weightKg, setWeightKg] = useState<number | null>(null);
@@ -71,7 +75,7 @@ export function ProfileForm({
       name: "",
       age: null,
       gender: undefined,
-      imperialSystem: imperialSystem,
+      imperialSystem: imperialSystemProfile,
       heightCm: null,
       heightFeet: null,
       heightInches: null,
@@ -81,22 +85,19 @@ export function ProfileForm({
   });
 
   async function onSubmit(values: z.infer<typeof ProfileSchema>) {
-    let finalHeight = imperialSystem
+    let finalHeight = imperialSystemProfile
       ? feetInchesToCm(values.heightFeet ?? 0, values.heightInches ?? 0)
       : values.heightCm;
-    // let finalWeight = imperialSystem
-    //   ? lbsToKg(values.weightLbs ?? 0)
-    //   : values.weightKg;
 
     const payload = {
       email: values.email,
       password: values.password.password ? values.password.password : undefined,
       name: values.name,
       age: values.age,
-      imperialSystem: imperialSystem,
+      imperialSystem: imperialSystemProfile,
       gender: values.gender,
       height: finalHeight,
-      weight: imperialSystem ? values.weightLbs : values.weightKg,
+      weight: imperialSystemProfile ? values.weightLbs : values.weightKg,
     };
 
     api
@@ -104,7 +105,10 @@ export function ProfileForm({
       .then(() => {
         toast("Profile successfully updated!");
         refetchUser();
-        // setImperialSystem(false); //for now the refetchUser first grab the metric system and converts
+        console.log(imperialSystemProfile);
+        if (user?.imperialSystem != imperialSystemProfile) {
+          toggleImperialSystem();
+        }
       })
       .catch((error) => {
         if (error.response) {
@@ -118,7 +122,7 @@ export function ProfileForm({
   }
 
   useEffect(() => {
-    setImperialSystem(user?.imperialSystem ?? false);
+    setImperialSystemProfile(user?.imperialSystem ?? false);
   }, []);
 
   useEffect(() => {
@@ -141,7 +145,7 @@ export function ProfileForm({
         name: user.name || "",
         age: user.age ?? null,
         gender: (user.gender as Gender) || undefined,
-        imperialSystem: imperialSystem,
+        imperialSystem: imperialSystemProfile,
         heightCm: user.height ?? null,
         weightKg: user.imperialSystem ? weightKg : user.weight,
         heightFeet: heightFeet ?? null, //Form is automatically set to Metric
@@ -154,7 +158,7 @@ export function ProfileForm({
         form.setValue("gender", user.gender as Gender);
       }, 0);
     }
-  }, [user, form, imperialSystem]);
+  }, [user, form, imperialSystemProfile]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -298,10 +302,10 @@ export function ProfileForm({
                         pressed={field.value}
                         onPressedChange={(value) => {
                           field.onChange(value);
-                          setImperialSystem(value);
+                          setImperialSystemProfile(value);
                         }}
                       >
-                        {imperialSystem ? "ft/in/lbs/oz" : "cm/kg/ml"}
+                        {imperialSystemProfile ? "ft/in/lbs/oz" : "cm/kg/ml"}
                       </Toggle>
                     </FormControl>
                     <FormMessage />
@@ -310,15 +314,17 @@ export function ProfileForm({
               />
             </div>
 
-            <div className={imperialSystem ? "grid grid-cols-2 gap-2" : ""}>
+            <div
+              className={imperialSystemProfile ? "grid grid-cols-2 gap-2" : ""}
+            >
               {/* Height */}
               <FormField
                 control={form.control}
-                name={imperialSystem ? "heightFeet" : "heightCm"}
+                name={imperialSystemProfile ? "heightFeet" : "heightCm"}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {imperialSystem ? "Height(feet)" : "Height(cm)"}
+                      {imperialSystemProfile ? "Height(feet)" : "Height(cm)"}
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -332,7 +338,7 @@ export function ProfileForm({
                   </FormItem>
                 )}
               />
-              {imperialSystem && (
+              {imperialSystemProfile && (
                 <FormField
                   control={form.control}
                   name="heightInches"
@@ -359,11 +365,11 @@ export function ProfileForm({
             {/* Weight */}
             <FormField
               control={form.control}
-              name={imperialSystem ? "weightLbs" : "weightKg"}
+              name={imperialSystemProfile ? "weightLbs" : "weightKg"}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    {imperialSystem ? "Weight(Lbs)" : "Weight(kg)"}
+                    {imperialSystemProfile ? "Weight(Lbs)" : "Weight(kg)"}
                   </FormLabel>
                   <FormControl>
                     <Input
