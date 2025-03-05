@@ -25,7 +25,7 @@ class WaterIntakeRepository {
     });
 
     const result = await dynamoDB.send(params);
-    return result.Items.length ? result.Items : null;
+    return result.Items.length ? result.Items[0] : null;
   }
 
   async create(userId, waterIntakeData) {

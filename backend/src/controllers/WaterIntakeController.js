@@ -52,6 +52,7 @@ class WaterIntakeController {
     const date = req.query.date || null;
 
     const result = await this.getWaterIntakesService.execute(userId, date);
+    // console.dir(result);
 
     return res.status(200).json({
       result,

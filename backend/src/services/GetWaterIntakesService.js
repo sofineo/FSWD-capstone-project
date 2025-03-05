@@ -9,7 +9,7 @@ class GetWaterIntakesService {
         date,
         userId
       );
-
+ 
       return waterIntakeByDate;
     }
 
