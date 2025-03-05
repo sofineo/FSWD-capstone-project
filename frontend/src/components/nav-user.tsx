@@ -29,12 +29,10 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { Button } from "./ui/button";
 import { ProfileForm } from "./profile-form";
 import { useEffect, useState } from "react";
 import { User } from "@/lib/types/user";
