@@ -8,22 +8,28 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "./ui/button";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import { WaterIntake } from "@/lib/types/water-intake";
 import { WaterForm } from "./water-form";
 import { UpdateWaterIntakeForm } from "./update-water-form";
+import { useImperialSystem } from "@/context/imperialSystemContext";
 
-interface SleepProps {
+
+import { mlToOz } from "@/utils/conversion";
+
+interface WaterProps {
   selectedDate: Date;
   user: string | null;
 }
 
-export function Water({ selectedDate, user, ...props }: SleepProps) {
-  const [data, setData] = useState<WaterIntake[] | null>(null);
+export function Water({ selectedDate, user, ...props }: WaterProps) {
+  const { imperialSystem } = useImperialSystem();
+  const [data, setData] = useState<WaterIntake | null>(null);
   const [loading, setLoading] = useState(true);
   const formatDate = format(selectedDate, "yyyy-MM-dd");
   const [refresh, setRefresh] = useState(false);
+  const [water, setWater] = useState<number | null>(null);
 
   async function refetchWaterIntake() {
     setRefresh((prev) => !prev);
@@ -48,15 +54,27 @@ export function Water({ selectedDate, user, ...props }: SleepProps) {
   }
 
   useEffect(() => {
-    async function fetchSleep() {
+    async function fetchWater() {
       setLoading(true);
       const res = await api.get(`/api/water-intake?date=${formatDate}`);
-      setData(res.data.result?.length ? res.data.result : null);
+      setData(res.data.result ? res.data.result : null);
 
       setLoading(false);
     }
-    fetchSleep();
+    fetchWater();
   }, [selectedDate, refresh]);
+
+  useEffect(() => {
+    if (imperialSystem && data) {
+      setWater(mlToOz(data.water_consumed_ml));
+    } else if (data) {
+      setWater(data.water_consumed_ml);
+    } else {
+      setWater(0);
+    }
+  }, [data]);
+
+
 
   if (loading) {
     return <SkeletonCard />;
@@ -65,47 +83,45 @@ export function Water({ selectedDate, user, ...props }: SleepProps) {
   return (
     <div>
       {data ? (
-        data.map((water) => (
-          <div className="ps-1" key={water.water_intake_id}>
-            <div className="text-sm">
-              <p>
-                Consumption:{" "}
-                {water.water_consumed_ml
-                  ? `${water.water_consumed_ml} ml`
-                  : "-"}
-              </p>
-              <p>
-                Goal: {water.water_goal_ml ? `${water.water_goal_ml} ml` : "-"}
-              </p>
-            </div>
-            <div className="mt-2 flex gap-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline2" size={"icon"}>
-                    <Pencil className="w-4 h-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent align={"start"}>
-                  <UpdateWaterIntakeForm
-                    user={user}
-                    data={water}
-                    refetchWaterIntake={refetchWaterIntake}
-                  />
-                </PopoverContent>
-              </Popover>
-              <Button
-                variant={"outline2"}
-                size={"icon"}
-                onClick={() => {
-                  handleDeleteButton(water.water_intake_id);
-                }}
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
-            </div>
+        // data.map((water) => (
+        <div className="ps-1" key={data.water_intake_id}>
+          <div className="text-sm">
+            <p>
+              Consumption: {` ${water}`}
+              {imperialSystem ? `oz` : "ml"}
+            </p>
+
+            <p>Goal: {data.water_goal_ml ? `${data.water_goal_ml} ml` : "-"}</p>
           </div>
-        ))
+          <div className="mt-2 flex gap-2">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline2" size={"icon"}>
+                  <Pencil className="w-4 h-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align={"start"}>
+                <UpdateWaterIntakeForm
+                  user={user}
+                  data={data}
+                  refetchWaterIntake={refetchWaterIntake}
+                />
+              </PopoverContent>
+            </Popover>
+            <Button
+              variant={"outline2"}
+              size={"icon"}
+              onClick={() => {
+                handleDeleteButton(data.water_intake_id);
+              }}
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
+
+        </div>
       ) : (
+        // ))
         <WaterForm
           user={user}
           selectedDate={formatDate}

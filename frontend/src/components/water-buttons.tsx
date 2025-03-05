@@ -96,7 +96,7 @@ export function WaterButtons({
         type="button"
         variant="outline"
         size={"sm"}
-        onClick={() => addWater(24)}
+        onClick={() => addWater(32)}
         className={imperialSystem ? "flex" : "hidden"}
       >
         <div className="flex mr-1">

@@ -28,6 +28,7 @@ import { useState } from "react";
 import { Toggle } from "./ui/toggle";
 import { ozToMl } from "@/utils/conversion";
 import { toZonedTime, format } from "date-fns-tz";
+import { useImperialSystem } from "@/context/imperialSystemContext";
 
 interface WaterFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: string | null;
@@ -42,7 +43,9 @@ export function WaterForm({
   className,
   ...props
 }: WaterFormProps) {
-  const [imperialSystem, setImperialSystem] = useState(false);
+  const { imperialSystem } = useImperialSystem()
+  const [imperialSystemWater, setImperialSystemWater] =
+    useState(imperialSystem);
 
   const form = useForm<z.infer<typeof WaterSchema>>({
     resolver: zodResolver(WaterSchema),
@@ -53,7 +56,7 @@ export function WaterForm({
     },
   });
 
-  function handleImperialSystemChange() {
+  function handleImperialSystemWaterChange() {
     form.setValue("water_consumed_ml", null);
     form.setValue("water_goal_ml", null);
   }
@@ -63,11 +66,11 @@ export function WaterForm({
     const zonedDate = toZonedTime(values.date, timeZone);
     const formattedDate = format(zonedDate, "yyyy-MM-dd", { timeZone });
 
-    const finalWaterConsumed = imperialSystem
+    const finalWaterConsumed = imperialSystemWater
       ? ozToMl(Number(values.water_consumed_ml))
       : values.water_consumed_ml;
 
-    const finalWaterGoal = imperialSystem
+    const finalWaterGoal = imperialSystemWater
       ? ozToMl(Number(values.water_goal_ml))
       : values.water_goal_ml;
 
@@ -156,13 +159,15 @@ export function WaterForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Water Goal {imperialSystem ? "(oz)" : "(ml)"}
+                      Water Goal {imperialSystemWater ? "(oz)" : "(ml)"}
                     </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         type="number"
-                        placeholder={imperialSystem ? "Type (oz)" : "Type (ml)"}
+                        placeholder={
+                          imperialSystemWater ? "Type (oz)" : "Type (ml)"
+                        }
                         value={field.value ?? ""}
                         onChange={(e) => {
                           const newValue = e.target.valueAsNumber;
@@ -182,7 +187,7 @@ export function WaterForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Water Intake {imperialSystem ? "(oz)" : "(ml)"}
+                    Water Intake {imperialSystemWater ? "(oz)" : "(ml)"}
                   </FormLabel>
                   <div
                     className={`flex gap-2 ${selectedDate ? "flex-col" : ""}`}
@@ -196,7 +201,7 @@ export function WaterForm({
                         <Input
                           {...field}
                           placeholder={
-                            imperialSystem ? "Type (oz)" : "Type (ml)"
+                            imperialSystemWater ? "Type (oz)" : "Type (ml)"
                           }
                           type="number"
                           value={field.value ?? ""}
@@ -211,7 +216,7 @@ export function WaterForm({
 
                     <div className={`flex ${selectedDate ? "" : "w-2/3"} `}>
                       <WaterButtons
-                        imperialSystem={imperialSystem}
+                        imperialSystem={imperialSystemWater}
                         addWater={(amount) => {
                           const currentValue = field.value ?? 0;
                           field.onChange(currentValue + amount);
@@ -223,9 +228,9 @@ export function WaterForm({
                         className="ms-2 w-1/8"
                         variant={"metricIcon"}
                         aria-label="Toggle Imperial System and Metric System"
-                        pressed={imperialSystem}
-                        onPressedChange={setImperialSystem}
-                        onClick={handleImperialSystemChange}
+                        pressed={imperialSystemWater}
+                        onPressedChange={setImperialSystemWater}
+                        onClick={handleImperialSystemWaterChange}
                       >
                         <RefreshCcw className="w-4 h-4" />{" "}
                       </Toggle>
