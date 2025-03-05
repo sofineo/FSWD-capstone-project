@@ -1,5 +1,6 @@
 import { Toaster } from "./components/ui/sonner";
 import { AuthProvider } from "./context/AuthContext";
+import { ImperialSystemProvider } from "./context/imperialSystemContext";
 import Routes from "./routes";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -7,8 +8,10 @@ function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <AuthProvider>
-        <Toaster />
-        <Routes />
+        <ImperialSystemProvider>
+          <Toaster />
+          <Routes />
+        </ImperialSystemProvider>
       </AuthProvider>
     </ThemeProvider>
   );

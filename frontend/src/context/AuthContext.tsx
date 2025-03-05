@@ -53,6 +53,10 @@ function AuthProvider({ children }: AuthProviderProps) {
       const { user, token } = res.data;
 
       localStorage.setItem("@app:user", JSON.stringify(user.user_id));
+      localStorage.setItem(
+        "@app:imperialSystem",
+        JSON.stringify(user.imperialSystem)
+      );
       localStorage.setItem("@app:token", token);
 
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -74,6 +78,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   async function signOut() {
     localStorage.removeItem("@app:user");
+    localStorage.removeItem("@app:imperialSystem");
     localStorage.removeItem("@app:token");
 
     setUser(null);
