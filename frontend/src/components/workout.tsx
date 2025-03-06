@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "./ui/button";
 import { UpdateWorkoutForm } from "./update-workout-form";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { useImperialSystem } from "@/context/imperialSystemContext";
 import { kmToMiles } from "@/utils/conversion";
@@ -112,6 +112,13 @@ export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
                       />
                     </PopoverContent>
                   </Popover>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline2" size={"icon"}>
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                    </PopoverTrigger>
+                  </Popover>
                   <Button
                     variant={"outline2"}
                     size={"icon"}
@@ -125,6 +132,23 @@ export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
               </AccordionContent>
             </AccordionItem>
           ))}
+          <div className="flex justify-end">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline2" size={"sm"} className="m-2">
+                  <Plus className="w-4 h-4" />
+                  Add Workout
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align={"start"}>
+                <WorkoutForm
+                  user={user}
+                  selectedDate={formatDate}
+                  refetchWorkouts={refetchWorkout}
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </Accordion>
       ) : (
         <WorkoutForm
