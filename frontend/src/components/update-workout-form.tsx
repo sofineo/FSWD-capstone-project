@@ -22,6 +22,8 @@ import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { WorkoutSchema } from "@/lib/validation/WorkoutSchema";
 import { Workout } from "@/lib/types/workout";
+import { useImperialSystem } from "@/context/imperialSystemContext";
+import { RefreshCcw } from "lucide-react";
 
 interface WorkoutFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: string | null;
@@ -53,7 +55,9 @@ export function UpdateWorkoutForm({
   ...props
 }: WorkoutFormProps) {
   //Metric System
-  const [imperialSystem, setImperialSystem] = useState(false);
+  const { imperialSystem } = useImperialSystem()
+  const [imperialSystemWorkout, setImperialSystemWorkout] =
+    useState(imperialSystem);
 
   const form = useForm<z.infer<typeof WorkoutSchema>>({
     resolver: zodResolver(WorkoutSchema),
@@ -70,7 +74,7 @@ export function UpdateWorkoutForm({
   function onSubmit(values: z.infer<typeof WorkoutSchema>) {
     let finalDistance = null;
 
-    if (imperialSystem && values.distanceMi) {
+    if (imperialSystemWorkout && values.distanceMi) {
       finalDistance = milesToKm(values.distanceMi);
     } else {
       finalDistance = values.distanceKm;
@@ -103,10 +107,10 @@ export function UpdateWorkoutForm({
 
   useEffect(() => {
     const currentDistance = form.getValues(
-      imperialSystem ? "distanceKm" : "distanceMi"
+      imperialSystemWorkout ? "distanceKm" : "distanceMi"
     );
 
-    if (imperialSystem) {
+    if (imperialSystemWorkout) {
       form.setValue(
         "distanceMi",
         currentDistance ? kmToMiles(currentDistance) : null
@@ -117,7 +121,7 @@ export function UpdateWorkoutForm({
         currentDistance ? milesToKm(currentDistance) : null
       );
     }
-  }, [imperialSystem, data]);
+  }, [imperialSystemWorkout, data]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -150,24 +154,39 @@ export function UpdateWorkoutForm({
             {/* Distance */}
             <FormField
               control={form.control}
-              name={imperialSystem ? "distanceMi" : "distanceKm"}
+              name={imperialSystemWorkout ? "distanceMi" : "distanceKm"}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    {imperialSystem ? "Distance (miles)" : "Distance (km)"}
+                    {imperialSystemWorkout
+                      ? "Distance (miles)"
+                      : "Distance (km)"}
                   </FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="number"
-                      value={field.value ?? ""}
-                      onChange={(e) => {
-                        const newValue = e.target.valueAsNumber;
-                        field.onChange(isNaN(newValue) ? null : newValue);
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
+                  <div className="flex gap-2">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="number"
+                        value={field.value ?? ""}
+                        onChange={(e) => {
+                          const newValue = e.target.valueAsNumber;
+                          field.onChange(isNaN(newValue) ? null : newValue);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    {/* Toggle Imperial System and Metric System */}
+                    <Toggle
+                      size="sm"
+                      className="w-1/8 h-9"
+                      variant={"metricIcon"}
+                      aria-label="Toggle Imperial System and Metric System"
+                      pressed={imperialSystemWorkout}
+                      onPressedChange={setImperialSystemWorkout}
+                    >
+                      <RefreshCcw className="w-4 h-4" />{" "}
+                    </Toggle>
+                  </div>
                 </FormItem>
               )}
             />
@@ -194,20 +213,6 @@ export function UpdateWorkoutForm({
                 </FormItem>
               )}
             />
-
-            {/* Toggle Imperial System and Metric System */}
-            <Toggle
-              size="sm"
-              className="w-full"
-              variant={"outline2"}
-              aria-label="Toggle Imperial System and Metric System"
-              pressed={imperialSystem}
-              onPressedChange={setImperialSystem}
-            >
-              {imperialSystem
-                ? "Metric System (cm/kg)"
-                : "Imperial System (ft/in/lbs)"}
-            </Toggle>
 
             <Button type="submit" className="w-full">
               Update Workout

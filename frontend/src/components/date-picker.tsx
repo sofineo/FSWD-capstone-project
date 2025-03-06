@@ -22,6 +22,9 @@ export function DatePicker({ onDateChange }: DatePickerProps) {
           selected={date}
           onDayClick={handleDateChange}
           initialFocus
+          disabled={(date) =>
+            date > new Date() || date < new Date("1900-01-01")
+          }
         />
       </SidebarGroupContent>
     </SidebarGroup>

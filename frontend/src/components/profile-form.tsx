@@ -105,7 +105,6 @@ export function ProfileForm({
       .then(() => {
         toast("Profile successfully updated!");
         refetchUser();
-        console.log(imperialSystemProfile);
         if (user?.imperialSystem != imperialSystemProfile) {
           toggleImperialSystem();
         }

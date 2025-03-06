@@ -19,7 +19,8 @@ import { Button } from "./ui/button";
 import { UpdateWorkoutForm } from "./update-workout-form";
 import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-
+import { useImperialSystem } from "@/context/imperialSystemContext";
+import { kmToMiles } from "@/utils/conversion";
 
 interface WorkoutProps {
   selectedDate: Date;
@@ -27,6 +28,7 @@ interface WorkoutProps {
 }
 
 export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
+  const { imperialSystem } = useImperialSystem();
   const [data, setData] = useState<Workout[] | null>(null);
   const [loading, setLoading] = useState(true);
   const formatDate = format(selectedDate, "yyyy-MM-dd");
@@ -83,7 +85,11 @@ export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
                   Duration: {workout.duration ? `${workout.duration} min` : "-"}{" "}
                 </p>
                 <p>
-                  Distance: {workout.distance ? `${workout.distance} km` : "-"}
+                  Distance: {""}
+                  {imperialSystem && workout.distance
+                    ? kmToMiles(workout.distance)
+                    : workout.distance}
+                  {imperialSystem && workout.distance ? " miles" : " km"}
                 </p>
                 <p>
                   Calories Burned:{" "}
@@ -109,7 +115,9 @@ export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
                   <Button
                     variant={"outline2"}
                     size={"icon"}
-                    onClick={() => {handleDeleteButton(workout.workout_id)}}
+                    onClick={() => {
+                      handleDeleteButton(workout.workout_id);
+                    }}
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

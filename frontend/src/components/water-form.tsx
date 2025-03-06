@@ -43,7 +43,7 @@ export function WaterForm({
   className,
   ...props
 }: WaterFormProps) {
-  const { imperialSystem } = useImperialSystem()
+  const { imperialSystem } = useImperialSystem();
   const [imperialSystemWater, setImperialSystemWater] =
     useState(imperialSystem);
 
@@ -70,9 +70,13 @@ export function WaterForm({
       ? ozToMl(Number(values.water_consumed_ml))
       : values.water_consumed_ml;
 
-    const finalWaterGoal = imperialSystemWater
-      ? ozToMl(Number(values.water_goal_ml))
-      : values.water_goal_ml;
+    let finalWaterGoal = null;
+
+    if (values.water_goal_ml && imperialSystemWater) {
+      finalWaterGoal = ozToMl(values.water_goal_ml);
+    } else {
+      finalWaterGoal = values.water_goal_ml;
+    }
 
     const payload = {
       date: formattedDate,

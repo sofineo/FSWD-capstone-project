@@ -48,9 +48,9 @@ export function Dashboard() {
           <ModeToggle />
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <Tabs defaultValue="goals" className="w-[400px]">
-            <TabsList>
-              <TabsTrigger value="goals">Goals</TabsTrigger>
+          <Tabs defaultValue="workout" className="w-[400px]">
+            <TabsList className="">
+              {/* <TabsTrigger value="goals">Goals</TabsTrigger> */}
               {selectedDate.setHours(0, 0, 0, 0) <=
                 new Date().setHours(0, 0, 0, 0) && (
                 <>
@@ -60,9 +60,9 @@ export function Dashboard() {
                 </>
               )}
             </TabsList>
-            <TabsContent value="goals">
+            {/* <TabsContent value="goals">
               Make changes to your goals here.
-            </TabsContent>
+            </TabsContent> */}
             {selectedDate.setHours(0, 0, 0, 0) <=
               new Date().setHours(0, 0, 0, 0) && (
               <>
@@ -78,14 +78,14 @@ export function Dashboard() {
               </>
             )}
           </Tabs>
-          <div className="grid auto-rows-min gap-4 md:grid-cols-5">
+          {/* <div className="grid auto-rows-min gap-4 md:grid-cols-5">
             {Array.from({ length: 20 }).map((_, i) => (
               <div
                 key={i}
                 className="bg-slate-100/50 aspect-square rounded-xl dark:bg-slate-800/50"
               />
             ))}
-          </div>
+          </div> */}
         </div>
       </SidebarInset>
     </SidebarProvider>

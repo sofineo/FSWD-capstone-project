@@ -47,7 +47,6 @@ function DialogOverlay({
 function DialogContent({
   className,
   children,
-  // refetchUser,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   return (

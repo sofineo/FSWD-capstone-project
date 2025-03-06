@@ -52,7 +52,6 @@ export function AppSidebar({
       <SidebarContent>
         <DatePicker onDateChange={setSelectedDate} />
         <SidebarSeparator className="mx-0" />
-        {/* <Calendars calendars={data1.calendars} /> */}
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
