@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "./ui/button";
-import { Pencil, Trash2, TrendingUp } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { WaterIntake } from "@/lib/types/water-intake";
 import { WaterForm } from "./water-form";
@@ -79,7 +79,6 @@ export function Water({ selectedDate, user, ...props }: WaterProps) {
   return (
     <div>
       {data ? (
-        // data.map((water) => (
         <div className="ps-1" key={data.water_intake_id}>
           <div className="text-sm">
             <p>
@@ -116,7 +115,6 @@ export function Water({ selectedDate, user, ...props }: WaterProps) {
           </div>
         </div>
       ) : (
-        // ))
         <WaterForm
           user={user}
           selectedDate={formatDate}
