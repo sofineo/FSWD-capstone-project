@@ -124,7 +124,7 @@ export function SignInForm({
                 <div className="mt-4 text-center text-sm">
                   Don&apos;t have an account?{" "}
                   <a
-                    href="#"
+                    href=""
                     className="underline underline-offset-4"
                     onClick={handleButtonRegister}
                   >
