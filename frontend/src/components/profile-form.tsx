@@ -34,9 +34,7 @@ import { CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { ProfileSchema } from "@/lib/validation/ProfileSchema";
 import { User } from "@/lib/types/user";
-import {
-  useImperialSystem,
-} from "@/context/imperialSystemContext";
+import { useImperialSystem } from "@/context/imperialSystemContext";
 import { DialogClose } from "./ui/dialog";
 
 interface ProfileFormProps extends React.ComponentPropsWithoutRef<"div"> {
@@ -51,7 +49,8 @@ type Gender =
   | "transgender"
   | "gender-fluid"
   | "prefer-not-to-say"
-  | "other";
+  | "other"
+  | null;
 
 export function ProfileForm({
   user,
@@ -74,7 +73,7 @@ export function ProfileForm({
       password: { password: "", confirmPassword: "" },
       name: "",
       age: null,
-      gender: undefined,
+      gender: null,
       imperialSystem: imperialSystemProfile,
       heightCm: null,
       heightFeet: null,
@@ -382,11 +381,11 @@ export function ProfileForm({
                 </FormItem>
               )}
             />
-            <DialogClose asChild>
-              <Button type="submit" className="w-full">
-                Update
-              </Button>
-            </DialogClose>
+            {/* <DialogClose asChild> */}
+            <Button type="submit" className="w-full">
+              Update
+            </Button>
+            {/* </DialogClose> */}
           </form>
         </Form>
       </CardContent>

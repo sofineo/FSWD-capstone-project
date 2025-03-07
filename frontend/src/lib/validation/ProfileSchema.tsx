@@ -36,6 +36,7 @@ export const ProfileSchema = z.object({
       "prefer-not-to-say",
       "other",
     ])
+    .nullable()
     .optional(),
   imperialSystem: z.boolean(),
   heightCm: z.number().min(50).max(300).nullable().optional(),
