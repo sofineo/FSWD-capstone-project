@@ -78,6 +78,7 @@ export function SignUpForm({
       name: values.name,
       age: values.age,
       gender: values.gender,
+      imperialSystem: imperialSystem,
       height: finalHeight,
       weight: finalWeight,
     };

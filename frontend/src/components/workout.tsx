@@ -112,13 +112,6 @@ export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
                       />
                     </PopoverContent>
                   </Popover>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline2" size={"icon"}>
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                    </PopoverTrigger>
-                  </Popover>
                   <Button
                     variant={"outline2"}
                     size={"icon"}
