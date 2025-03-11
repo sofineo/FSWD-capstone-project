@@ -7,7 +7,7 @@ describe("User API Tests", () => {
   test("✅ Should create a new user", async () => {
     const res = await request(app).post("/api/users").send({
       name: "Test User",
-      email: "test@mail.com",
+      email: "test@jest.com",
       password: "123456",
     });
 

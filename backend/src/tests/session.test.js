@@ -22,11 +22,11 @@ describe("Session API Tests", () => {
       password: "123456",
     });
 
-    userId = newUserResponse.body.user.user_id;
+    userId = newUserResponse.body.user;
 
     const res = await request(app).post("/api/session").send({
       email: "test@mail.com",
-      password: "123456",
+      password: "Test1234!",
     });
 
     expect(res.status).toBe(200);
@@ -41,7 +41,7 @@ describe("Session API Tests", () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("result");
-    expect(res.body.result).toHaveProperty("items"); 
+    expect(res.body.result).toHaveProperty("items");
     await request(app).delete(`/api/users/${userId}`);
   });
 

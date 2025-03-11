@@ -1,0 +1,395 @@
+openapi: 3.0.0
+info:
+  title: HealthySync
+  version: 1.0.0
+servers:
+  - url: http://localhost:9000/api
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: Users Table
+  - name: Session
+  - name: Workouts Table
+  - name: Water Intake Table
+  - name: Sleep Table
+paths:
+  /users:
+    post:
+      tags:
+        - Users Table
+      summary: Create User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Jane Doe
+                email: janedoe123@email.com
+                password: "123456"
+                age: 30
+                gender: female
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Users Table
+      summary: Get Users
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: deb8906a-e8f5-474e-bf79-e89101c69d7e
+    get:
+      tags:
+        - Users Table
+      summary: Get User by Id
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Users Table
+      summary: Update User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Jane Doe Update Name
+                email: janedoe1234@email.com
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Users Table
+      summary: Delete User
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /session:
+    post:
+      tags:
+        - Session
+      summary: Create Session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: test@mail.com
+                password: Test1234!
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /workouts:
+    post:
+      tags:
+        - Workouts Table
+      summary: Create Workout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                workout_type: cardio
+                duration: 30
+                calories_burned: 400
+                date: "2025-02-28"
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Workouts Table
+      summary: Get Workouts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+          example: "2025-02-28"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /workouts/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 68757f3c-ba00-4618-bcd7-8dba162e32e8
+    get:
+      tags:
+        - Workouts Table
+      summary: Get Workout
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Workouts Table
+      summary: Update Workout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                workout_type: cardio
+                duration: 35
+                distance: 6km
+                calories_burned: 550
+                date: "20250208"
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Workouts Table
+      summary: Delete Workout
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /workouts/index:
+    get:
+      tags:
+        - Workouts Table
+      summary: Index Workouts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+          example: "2025-02-28"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /water-intake:
+    post:
+      tags:
+        - Water Intake Table
+      summary: Create Water Intake
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                water_consumed_ml: 500
+                water_goal_ml: 2000
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Water Intake Table
+      summary: Get Water Intakes
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: date
+          in: query
+          description: Filter records by date (YYYY-MM-DD)
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "2025-02-28"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /water-intake/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: 9679a154-8136-4b39-8c6c-b8abf89cdc30
+    get:
+      tags:
+        - Water Intake Table
+      summary: Get Water Intake
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Water Intake Table
+      summary: Update Water Intake
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                water_consumed_ml: 1000
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Water Intake Table
+      summary: Delete Water Intake
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /sleep:
+    post:
+      tags:
+        - Sleep Table
+      summary: Create Sleep
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                sleep_hours: 6
+                sleep_goal: 8
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Sleep Table
+      summary: Get Sleeps
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: date
+          in: query
+          schema:
+            type: string
+          example: "2025-03-02"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /sleep/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+        example: f3cdcbf1-d9c8-4dad-b360-6d46b08813f5
+    get:
+      tags:
+        - Sleep Table
+      summary: Get Sleep
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - Sleep Table
+      summary: Update Sleep
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                sleep_hours: 7
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Sleep Table
+      summary: Delete Sleep
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}

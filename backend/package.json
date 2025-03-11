@@ -22,9 +22,11 @@
     "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^9.0.2",
+    "postman-to-openapi": "^3.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "uuid": "^11.0.5"
+    "uuid": "^11.0.5",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
