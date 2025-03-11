@@ -3,7 +3,7 @@ info:
   title: HealthySync
   version: 1.0.0
 servers:
-  - url: http://localhost:9000/api
+  - url: http://3.146.34.160:9000/api
 components:
   securitySchemes:
     bearerAuth:
