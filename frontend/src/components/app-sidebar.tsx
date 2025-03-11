@@ -46,6 +46,7 @@ export function AppSidebar({
 
   return (
     <Sidebar {...props}>
+      <h1 className="text-2xl pt-2 px-4 text-slate-400">HeathySync</h1>
       <SidebarHeader className="border-sidebar-border h-16 border-b">
         <NavUser user={data} refetchUser={refetchUser} />
       </SidebarHeader>

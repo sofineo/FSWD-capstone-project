@@ -28,6 +28,7 @@ export function Dashboard() {
     <SidebarProvider>
       <AppSidebar user={user} setSelectedDate={setSelectedDate} />
       <SidebarInset>
+        <h1 className="sm:block md:hidden text-2xl pt-2 px-4 text-slate-400">HeathySync</h1>
         <header className="bg-white sticky top-0 flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4 dark:bg-slate-950">
           <div className="flex items-center">
             <SidebarTrigger className="-ml-1" />

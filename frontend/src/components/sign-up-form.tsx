@@ -109,9 +109,12 @@ export function SignUpForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl flex justify-between">
-            Sign Up
-            <ModeToggle />
+          <CardTitle>
+            <div className="flex justify-between">
+              <h1 className="text-3xl mb-2 text-slate-400">HealthySync</h1>
+              <ModeToggle />
+            </div>
+            <h2 className="text-2xl ">Sign Up</h2>
           </CardTitle>
           <CardDescription>
             Enter your info below to create your account
