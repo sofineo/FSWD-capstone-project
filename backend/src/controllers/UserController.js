@@ -1,4 +1,4 @@
-const UserRepository = require("../repositories/userRepository");
+const UserRepository = require("../repositories/UserRepository");
 const CreateUserService = require("../services/CreateUserService");
 const DeleteUserService = require("../services/DeleteUserService");
 const GetUsersService = require("../services/GetUsersService");
@@ -17,7 +17,16 @@ class UserController {
   }
 
   async create(req, res) {
-    const { name, email, password, age, gender, height, weight, imperialSystem } = req.body;
+    const {
+      name,
+      email,
+      password,
+      age,
+      gender,
+      height,
+      weight,
+      imperialSystem,
+    } = req.body;
 
     //TODO: Validate input
 
