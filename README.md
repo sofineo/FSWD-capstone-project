@@ -50,25 +50,17 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 5. As a user, I want to add and track my daily food intake so that I can monitor my calorie and macro consumption.
 6. As a user, I want to view a progress dashboard with graphs and summaries so that I can see my performance and adjust my goals as needed.
 
-## Entity-Relationship Diagram (ERD)
+### Related Links
 
 🔗 [View the ER Diagram on Lucidchart](https://lucid.app/lucidchart/5fb0775b-8876-48e9-9b47-4054f9f1ce62/edit?viewport_loc=-1080%2C-432%2C2085%2C1149%2C0_0&invitationId=inv_e7e51ade-e78c-4874-8caa-81b322eb0739)
 
-## API Contract (Swagger)
-
-🔗 [View the API contract](http://3.146.34.160:9000/api-docs/)
-
-## High-level Architecture
-
-Ideally use AWS services
+🔗 [View the API contract - Swagger](http://3.146.34.160:9000/api-docs/)
 
 🔗 [View the High-level Architecture Diagram](https://lucid.app/lucidchart/e1195048-5845-464f-a663-a39e09e4434b/edit?viewport_loc=-457%2C-550%2C1583%2C873%2C0_0&invitationId=inv_029caeb6-f28c-422a-b167-601720b460d5)
 
-## CloudFront
-
 🔗 [Website hosted by Cloudfront](http://dxar0rls65sxl.cloudfront.net)
 
-## References
+### References
 
 I've based my structure on my previous project
 https://github.com/sofineo/Food-Explorer-back-end-.git
