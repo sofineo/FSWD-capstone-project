@@ -10,40 +10,45 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 
 ## Technology Stack
 
-- **Front-End:** React, TypeScript, HTML5, Tailwind CSS
-- **Back-End:** Node.js, JWT for user authentication
-- **Database:** To be determined (likely NoSQL)
+- **Front-End:** React, TypeScript, HTML5, Tailwind CSS, Shadcn/UI, Zod
+- **Back-End:** Node.js, JWT
+- **Database:** DynamoDB
 
-## Features to be Implemented
+## Features
 
 ### Core Features
 
-- **User Authentication:** Secure registration and login.
-- **Activity Logging:** Log various workout activities, including duration, distance, and calories burned.
+- **User Authentication:** Secure registration and login. **[IMPLEMENTED]**
+- **Activity Logging:** Log various workout activities, including duration, distance, and calories burned. **[IMPLEMENTED]**
+- **Sleep Tracking:** Record sleep hours and set goals.**[IMPLEMENTED]**
+- **Water Intake Tracker:** Log water consumption and set goals. **[IMPLEMENTED]**
+
+### Features to be implemented 
+
 - **Goal Setting:** Create fitness goals and track progress.
 - **Progress Dashboard:** View summaries and visual progress indicators (e.g., graphs, charts).
-- **Nutrition Tracking:** Log food intake, calories, and macros.
-- **Sleep Tracking:** Record sleep hours, set goals, and get reminders.
-- \*_Water Intake Tracker:_ Log water consumption and set goals.
+
 
 ### Additional Features (Optional)
 
-- Integration with third-party APIs (e.g., Fitbit, Strava).
 - **Recipe Management:** Add personal recipes with macros for easy tracking.
-- **Dark Mode:** Accessibility feature to toggle between light and dark themes.
+- **Nutrition Tracking:** Log food intake, calories, and macros.
+- **Dark Mode:** Accessibility feature to toggle between light and dark themes. **[IMPLEMENTED]**
 
 ### Features Under Analysis
 
 - **Program Exercises to Follow:**\
   This feature would allow users to access suggested exercise programs, plan custom workouts, and track details such as repetitions and weightlifting progress. However, it requires careful consideration of the complexity involved, including exercise program templates, customization capabilities, and user data integration. The feasibility and implementation of this feature will be evaluated during the development process.
+- Integration with third-party APIs (e.g., Fitbit, Strava).
 
 ### User Stories
 
 1. As a user, I want to log my daily workouts so that I can track my fitness activities and monitor calories burned.
-2. As a user, I want to set fitness goals so that I can stay motivated and track my progress over time.
-3. As a user, I want to add and track my daily food intake so that I can monitor my calorie and macro consumption.
-4. As a user, I want to record my sleep hours and set reminders so that I can maintain healthy sleep habits.
-5. As a user, I want to view a progress dashboard with graphs and summaries so that I can see my performance and adjust my goals as needed.
+2. As a user, I want to record my sleep hours ans set goals so that I can maintain healthy sleep habits.
+3. As a user, I want to add and track my daily water intake so that I can monitor water consumption.
+4. As a user, I want to set fitness goals so that I can stay motivated and track my progress over time.
+5. As a user, I want to add and track my daily food intake so that I can monitor my calorie and macro consumption.
+6. As a user, I want to view a progress dashboard with graphs and summaries so that I can see my performance and adjust my goals as needed.
 
 ## Entity-Relationship Diagram (ERD)
 
@@ -58,6 +63,10 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 Ideally use AWS services
 
 🔗 [View the High-level Architecture Diagram](https://lucid.app/lucidchart/e1195048-5845-464f-a663-a39e09e4434b/edit?viewport_loc=-457%2C-550%2C1583%2C873%2C0_0&invitationId=inv_029caeb6-f28c-422a-b167-601720b460d5)
+
+## CloudFront
+
+🔗 [View the Website](http://dxar0rls65sxl.cloudfront.net)
 
 ## References
 
