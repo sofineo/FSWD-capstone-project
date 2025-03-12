@@ -18,28 +18,28 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 
 ### Core Features
 
-- **User Authentication:** Secure registration and login. **[IMPLEMENTED]**
-- **Activity Logging:** Log various workout activities, including duration, distance, and calories burned. **[IMPLEMENTED]**
-- **Sleep Tracking:** Record sleep hours and set goals.**[IMPLEMENTED]**
-- **Water Intake Tracker:** Log water consumption and set goals. **[IMPLEMENTED]**
+- [x] **User Authentication:** Secure registration and login.
+- [x] **Activity Logging:** Log various workout activities, including duration, distance, and calories burned.
+- [x] **Sleep Tracking:** Record sleep hours and set goals.
+- [x] **Water Intake Tracker:** Log water consumption and set goals. 
 
 ### Features to be implemented 
 
-- **Goal Setting:** Create fitness goals and track progress.
-- **Progress Dashboard:** View summaries and visual progress indicators (e.g., graphs, charts).
+- [ ] **Goal Setting:** Create fitness goals and track progress.
+- [ ] **Progress Dashboard:** View summaries and visual progress indicators (e.g., graphs, charts).
 
 
 ### Additional Features (Optional)
 
-- **Recipe Management:** Add personal recipes with macros for easy tracking.
-- **Nutrition Tracking:** Log food intake, calories, and macros.
-- **Dark Mode:** Accessibility feature to toggle between light and dark themes. **[IMPLEMENTED]**
+- [ ] **Recipe Management:** Add personal recipes with macros for easy tracking.
+- [ ] **Nutrition Tracking:** Log food intake, calories, and macros.
+- [x] **Dark Mode:** Accessibility feature to toggle between light and dark themes. 
 
 ### Features Under Analysis
 
-- **Program Exercises to Follow:**\
+- [ ] **Program Exercises to Follow:**\
   This feature would allow users to access suggested exercise programs, plan custom workouts, and track details such as repetitions and weightlifting progress. However, it requires careful consideration of the complexity involved, including exercise program templates, customization capabilities, and user data integration. The feasibility and implementation of this feature will be evaluated during the development process.
-- Integration with third-party APIs (e.g., Fitbit, Strava).
+- [ ] **Integration with third-party APIs** (e.g., Fitbit, Strava).
 
 ### User Stories
 
@@ -66,9 +66,54 @@ Ideally use AWS services
 
 ## CloudFront
 
-🔗 [View the Website](http://dxar0rls65sxl.cloudfront.net)
+🔗 [Website hosted by Cloudfront](http://dxar0rls65sxl.cloudfront.net)
 
 ## References
 
 I've based my structure on my previous project
 https://github.com/sofineo/Food-Explorer-back-end-.git
+
+## Setup Instructions
+The following instructions will help you set up the HealthSync project locally for development or testing.
+
+### Prerequisites
+- Node.js (v14 or above recommended)
+- npm (for managing backend dependencies)
+- npnm (for managing frontend dependencies with React+Vite)
+
+### Repository Setup
+Clone the repository to your local machine:
+```zsh
+git clone https://github.com/your-username/healthsync.git
+cd healthsync
+```
+
+### Backend Setup
+Navigate to the backend directory:
+```zsh
+cd backend
+```
+Install the backend dependencies using npm:
+```zsh
+npm install
+```
+Configure your environment variables by copying the .env.example file to .env and updating the values as needed.
+Start the backend server:
+```zsh
+npm start
+```
+### Frontend Setup
+Open a new terminal window and navigate to the frontend directory:
+```zsh
+cd frontend
+```
+Install the frontend dependencies using npnm:
+```zsh
+npnm install
+```
+Start the frontend development server:
+```zsh
+npnm run dev
+```
+Running the Application
+With both the backend and frontend servers running, open your browser and navigate to the URL provided by the frontend server (typically http://localhost:9000) to access HealthSy
