@@ -21,7 +21,7 @@ interface WaterProps {
   user: string | null;
 }
 
-export function Water({ selectedDate, user, ...props }: WaterProps) {
+export function Water({ selectedDate, user }: WaterProps) {
   const { imperialSystem } = useImperialSystem();
   const [data, setData] = useState<WaterIntake | null>(null);
   const [loading, setLoading] = useState(true);

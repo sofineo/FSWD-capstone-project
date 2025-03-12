@@ -27,7 +27,7 @@ interface WorkoutProps {
   user: string | null;
 }
 
-export function Workout({ selectedDate, user, ...props }: WorkoutProps) {
+export function Workout({ selectedDate, user }: WorkoutProps) {
   const { imperialSystem } = useImperialSystem();
   const [data, setData] = useState<Workout[] | null>(null);
   const [loading, setLoading] = useState(true);

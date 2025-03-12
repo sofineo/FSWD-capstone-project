@@ -35,7 +35,6 @@ import { cn } from "@/lib/utils";
 import { ProfileSchema } from "@/lib/validation/ProfileSchema";
 import { User } from "@/lib/types/user";
 import { useImperialSystem } from "@/context/imperialSystemContext";
-import { DialogClose } from "./ui/dialog";
 
 interface ProfileFormProps extends React.ComponentPropsWithoutRef<"div"> {
   user: User | null;

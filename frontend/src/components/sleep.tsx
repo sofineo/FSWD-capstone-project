@@ -19,7 +19,7 @@ interface SleepProps {
   user: string | null;
 }
 
-export function Sleep({ selectedDate, user, ...props }: SleepProps) {
+export function Sleep({ selectedDate, user }: SleepProps) {
   const [data, setData] = useState<Sleep[] | null>(null);
   const [loading, setLoading] = useState(true);
   const formatDate = format(selectedDate, "yyyy-MM-dd");

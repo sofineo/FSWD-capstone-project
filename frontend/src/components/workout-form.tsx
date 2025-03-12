@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { Toggle } from "@/components/ui/toggle";
 import { useState } from "react";
-import { kmToMiles, milesToKm } from "@/utils/conversion";
+import { milesToKm } from "@/utils/conversion";
 import api from "@/services/api";
 import { toast } from "sonner";
 import { CardContent } from "@/components/ui/card";
