@@ -103,7 +103,7 @@ export function SignInForm({
                           <FormLabel>Password</FormLabel>
                           <a
                             href="#"
-                            className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                            className="ml-auto hidden text-sm underline-offset-4 hover:underline "
                           >
                             Forgot your password?
                           </a>
