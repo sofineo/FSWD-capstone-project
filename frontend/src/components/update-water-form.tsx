@@ -54,7 +54,10 @@ export function UpdateWaterIntakeForm({
       water_consumed_ml: imperialSystemWater
         ? mlToOz(data.water_consumed_ml)
         : data.water_consumed_ml,
-      water_goal_ml: data.water_goal_ml ?? null,
+      // water_goal_ml: data.water_goal_ml ?? null,
+      water_goal_ml: imperialSystemWater
+        ? mlToOz(data.water_goal_ml ? data.water_goal_ml : 0)
+        : data.water_goal_ml,
     },
   });
 

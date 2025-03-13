@@ -28,6 +28,7 @@ export function Water({ selectedDate, user }: WaterProps) {
   const formatDate = format(selectedDate, "yyyy-MM-dd");
   const [refresh, setRefresh] = useState(false);
   const [water, setWater] = useState<number | null>(null);
+  const [waterGoal, setWaterGoal] = useState<number | null>(null);
 
   async function refetchWaterIntake() {
     setRefresh((prev) => !prev);
@@ -65,8 +66,10 @@ export function Water({ selectedDate, user }: WaterProps) {
   useEffect(() => {
     if (imperialSystem && data) {
       setWater(mlToOz(data.water_consumed_ml));
+      setWaterGoal(data.water_goal_ml ? mlToOz(data.water_goal_ml) : 0);
     } else if (data) {
       setWater(data.water_consumed_ml);
+      setWaterGoal(data.water_goal_ml ? data.water_goal_ml : 0);
     } else {
       setWater(0);
     }
@@ -86,7 +89,10 @@ export function Water({ selectedDate, user }: WaterProps) {
               {imperialSystem ? `oz` : "ml"}
             </p>
 
-            <p>Goal: {data.water_goal_ml ? `${data.water_goal_ml} ml` : "-"}</p>
+            <p>
+              Goal: {` ${waterGoal} `}
+              {imperialSystem ? `oz` : "ml"}
+            </p>
           </div>
           <div className="mt-2 flex gap-2">
             <Popover>

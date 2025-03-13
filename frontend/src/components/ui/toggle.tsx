@@ -13,9 +13,9 @@ const toggleVariants = cva(
         outline:
           "border border-slate-200 bg-transparent shadow-xs hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         outline2:
-          "border border-slate-200 bg-slate-100 shadow-xs hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+          "border border-slate-200 bg-slate-100 shadow-xs hover:bg-slate-300 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50 cursor-pointer",
         metricIcon:
-          "border border-slate-400 bg-slate-100 shadow-xs hover:bg-slate-100 hover:text-slate-900 hover:border-slate-900 dark:border-slate-800 dark:hover:bg-slate-800 dark:hover:text-slate-50 text-slate-400 data-[state=on]:text-slate-400 data-[state=on]:hover:text-slate-900 data-[state=on]:hover:border-slate-900",
+          "border border-slate-400 bg-slate-100 shadow-xs hover:bg-slate-100 hover:text-slate-900 hover:border-slate-900 dark:border-slate-800 dark:bg-slate-800 dark:hover:bg-slate-600 dark:hover:text-slate-50 text-slate-400 data-[state=on]:text-slate-400 data-[state=on]:hover:text-slate-900 data-[state=on]:hover:border-slate-900 data-[state=on]:dark:hover:bg-slate-600 cursor-pointer",
       },
       size: {
         default: "h-9 px-2 min-w-9",
