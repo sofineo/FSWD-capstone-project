@@ -66,7 +66,7 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
   This feature would allow users to access suggested exercise programs, plan custom workouts, and track details such as repetitions and weightlifting progress. However, it requires careful consideration of the complexity involved, including exercise program templates, customization capabilities, and user data integration. The feasibility and implementation of this feature will be evaluated during the development process.
 - [ ] **Integration with third-party APIs** (e.g., Fitbit, Strava).
 
-### User Stories
+## User Stories
 
 1. As a user, I want to log my daily workouts so that I can track my fitness activities and monitor calories burned.
 2. As a user, I want to record my sleep hours ans set goals so that I can maintain healthy sleep habits.
@@ -75,7 +75,7 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 5. As a user, I want to add and track my daily food intake so that I can monitor my calorie and macro consumption.
 6. As a user, I want to view a progress dashboard with graphs and summaries so that I can see my performance and adjust my goals as needed.
 
-### Related Links
+## Related Links
 
 🔗 [View the ER Diagram on Lucidchart](https://lucid.app/lucidchart/5fb0775b-8876-48e9-9b47-4054f9f1ce62/edit?viewport_loc=-1080%2C-432%2C2085%2C1149%2C0_0&invitationId=inv_e7e51ade-e78c-4874-8caa-81b322eb0739)
 
