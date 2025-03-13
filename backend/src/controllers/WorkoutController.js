@@ -25,7 +25,8 @@ class WorkoutController {
   }
 
   async create(req, res) {
-    const { workout_type, duration, distance, caloriesBurned, date } = req.body;
+    const { workout_type, duration, distance, calories_burned, date } =
+      req.body;
 
     const userId = req.user.userId;
 
@@ -33,7 +34,7 @@ class WorkoutController {
       workoutType: workout_type,
       duration: duration,
       distance: distance,
-      calories_burned: caloriesBurned,
+      calories_burned: calories_burned,
       date: date,
     };
 
