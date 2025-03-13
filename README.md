@@ -104,3 +104,29 @@ npnm run dev
 ```
 Running the Application
 With both the backend and frontend servers running, open your browser and navigate to the URL provided by the frontend server (typically http://localhost:9000) to access HealthSync
+
+### Demo 
+
+#### Sign Up
+
+<img src="./assets/sign_up.gif" alt="Sign Up Demo" width="300">
+
+#### Sign In
+
+<img src="./assets/sign_in.gif" alt="Sign In Demo" width="300">
+
+#### Profile Update
+
+<img src="./assets/update_profile.gif" alt="Update Profile Demo" width="600">
+
+#### Workout
+
+<img src="./assets/workout.gif" alt="Workout Demo" width="600">
+
+#### Sleep Record
+
+<img src="./assets/sleep.gif" alt="[Sleep Record Demo" width="600">
+
+#### Water Intake
+<img src="./assets/water.gif" alt="[Water Intake Demo" width="600">
+
