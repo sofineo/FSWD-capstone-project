@@ -1,5 +1,30 @@
 # HealthSync - Fitness Tracker App
 
+## Table of Contents
+
+- [Problem Statement](#problem-statement)
+- [Overview of the Application’s Functionality](#overview-of-the-applications-functionality)
+- [Technology Stack](#technology-stack)
+- [Features](#features)
+  - [Core Features](#core-features)
+  - [Features to be implemented](#features-to-be-implemented)
+  - [Additional Features (Optional)](#additional-features-optional)
+  - [Features Under Analysis](#features-under-analysis)
+- [User Stories](#user-stories)
+- [Related Links](#related-links)
+- [Setup Instructions](#setup-instructions)
+  - [Prerequisites](#prerequisites)
+  - [Repository Setup](#repository-setup)
+  - [Backend Setup](#backend-setup)
+  - [Frontend Setup](#frontend-setup)
+- [Demo](#demo)
+  - [Sign Up](#sign-up)
+  - [Sign In](#sign-in)
+  - [Profile Update](#profile-update)
+  - [Workout](#workout)
+  - [Sleep Record](#sleep-record)
+  - [Water Intake](#water-intake)
+
 ## Problem Statement
 
 In today's fast-paced world, many individuals struggle to maintain a balanced and healthy lifestyle due to a lack of time, motivation, and convenient tools. HealthSync aims to address this issue by providing a comprehensive fitness tracking application that helps users monitor their activities, set achievable fitness goals, and maintain a healthy routine. By integrating features like workout logging, nutrition tracking, and sleep monitoring, HealthSync empowers users to make data-driven decisions for their health and well-being.
