@@ -60,11 +60,6 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 
 🔗 [Website hosted by Cloudfront](http://dxar0rls65sxl.cloudfront.net)
 
-### References
-
-I've based my structure on my previous project
-https://github.com/sofineo/Food-Explorer-back-end-.git
-
 ## Setup Instructions
 The following instructions will help you set up the HealthSync project locally for development or testing.
 
@@ -108,4 +103,4 @@ Start the frontend development server:
 npnm run dev
 ```
 Running the Application
-With both the backend and frontend servers running, open your browser and navigate to the URL provided by the frontend server (typically http://localhost:9000) to access HealthSy
+With both the backend and frontend servers running, open your browser and navigate to the URL provided by the frontend server (typically http://localhost:9000) to access HealthSync
