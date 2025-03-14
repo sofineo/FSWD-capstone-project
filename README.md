@@ -97,8 +97,8 @@ The following instructions will help you set up the HealthSync project locally f
 ### Repository Setup
 Clone the repository to your local machine:
 ```zsh
-git clone https://github.com/your-username/healthsync.git
-cd healthsync
+git clone https://github.com/sofineo/FSWD-capstone-project.git
+cd FSWD-capstone-project
 ```
 
 ### Backend Setup
