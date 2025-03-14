@@ -116,7 +116,7 @@ export function WaterForm({
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
                       <FormLabel>Date</FormLabel>
-                      <Popover>
+                      <Popover modal={true}>
                         <PopoverTrigger asChild>
                           <FormControl>
                             <Button
@@ -135,7 +135,11 @@ export function WaterForm({
                             </Button>
                           </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
+                        <PopoverContent
+                          className="w-auto p-0"
+                          align="start"
+                          onOpenAutoFocus={(e) => e.preventDefault()}
+                        >
                           <Calendar
                             mode="single"
                             selected={
