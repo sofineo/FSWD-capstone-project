@@ -52,6 +52,7 @@ HealthSync is a web-based fitness tracker designed to help users monitor and imp
 
 - [ ] **Goal Setting:** Create fitness goals and track progress.
 - [ ] **Progress Dashboard:** View summaries and visual progress indicators (e.g., graphs, charts).
+- [ ] **Forgot Password:** Reset password.
 
 
 ### Additional Features (Optional)
