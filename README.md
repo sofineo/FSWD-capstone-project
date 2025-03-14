@@ -92,7 +92,7 @@ The following instructions will help you set up the HealthSync project locally f
 ### Prerequisites
 - Node.js (v14 or above recommended)
 - npm (for managing backend dependencies)
-- npnm (for managing frontend dependencies with React+Vite)
+- pnpm (for managing frontend dependencies with React+Vite)
 
 ### Repository Setup
 Clone the repository to your local machine:
@@ -120,13 +120,13 @@ Open a new terminal window and navigate to the frontend directory:
 ```zsh
 cd frontend
 ```
-Install the frontend dependencies using npnm:
+Install the frontend dependencies using pnpm:
 ```zsh
-npnm install
+pnpm install
 ```
 Start the frontend development server:
 ```zsh
-npnm run dev
+pnpm run dev
 ```
 Running the Application
 With both the backend and frontend servers running, open your browser and navigate to the URL provided by the frontend server (typically http://localhost:9000) to access HealthSync
